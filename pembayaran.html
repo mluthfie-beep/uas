@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>pembayaran</title>
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+<style>
+
+   
+    body{
+    background-color:#101c2c ;
+    color: #e5e7eb;
+    margin: 0;
+}
+
+.hero-header{
+position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #16233a !important; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 62px;
+  padding: 0 28px;
+
+  background: var(--navy-mid);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+header .header-text{
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+}
+
+
+.app-layout{
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar{
+    width: 220px;
+    background-color: #162435;
+    padding: 20px 16px;
+    flex-shrink: 0;
+}
+
+.main-content{
+    flex: 1;
+    padding: 24px 32px;
+    display: flex;
+    justify-content: center;
+}
+
+.content-center{
+    width: 100%;
+    max-width: 640px;
+}
+
+
+
+.card-dark{
+    background-color: #16233a;
+    border: 1px solid #223049;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: #e5e7eb;
+}
+
+.card-dark h2{
+    font-size: 1.1rem;
+    border-bottom: 1px solid #223049;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.bank-option{
+    background-color: #1c2a42;
+    border: 1px solid #2b3b57;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.bank-option.active{
+    border-color: #22c55e;
+    background-color: #16301f;
+    color: #4ade80;
+}
+
+.rekening-box{
+    background-color: #1c2a42;
+    border: 1px solid #2b3b57;
+    border-radius: 10px;
+    padding: 14px 16px;
+}
+
+.summary-panel{
+    width: 300px;
+    flex-shrink: 0;
+    padding: 24px 24px 24px 0;
+}
+
+.summary-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 0.85rem;
+}
+
+.summary-row .label{
+    color: #94a3b8;
+}
+
+.summary-row .value{
+    color: #e5e7eb;
+    font-weight: 500;
+    text-align: right;
+}
+
+.badge-status{
+    background-color: #3a2f10;
+    color: #facc15;
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.summary-total{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #223049;
+    margin-top: 12px;
+    padding-top: 14px;
+}
+
+.summary-total .label{
+    color: #cbd5e1;
+    font-size: 0.9rem;
+}
+
+.summary-total .value{
+    color: #4ade80;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.steps-list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.steps-list li{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+
+.steps-list .step-num{
+    background-color: #16301f;
+    color: #4ade80;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.warn-note{
+    display: flex;
+    background-color: rgb(48, 48, 30);
+    border: 1px dashed #4d3f12;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: #fde68a;
+}
+
+
+
+.upload-box{
+    border: 2px dashed #2b3b57;
+    border-radius: 10px;
+    padding: 40px 16px;
+    text-align: center;
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+.upload-box:hover{
+    background-color: #1c2a42;
+    border-color: #4ade80;
+    color: #4ade80;
+}
+
+
+.brand{
+    font-size: 20px;
+    margin-bottom: 24px;
+}
+.sidebar{   
+    min-height: calc(100vh - 62px);
+    align-self: stretch; 
+    width: 220px;
+    padding: 20px 16px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.sidebar-section{
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    text-transform: uppercase;
+    margin: 18px 0 8px;
+}
+
+.sidebar-item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.sidebar-item i{
+    font-size: 1rem;
+    width: 18px;
+    text-align: center;
+}
+
+.sidebar-item:hover{
+    background-color: #16233a;
+    color: #fff;
+}
+
+.sidebar-item.active{
+    background-color: #16301f;
+    color: #4ade80;
+    font-weight: 500;
+}
+.form-control-dark,
+.form-control-dark:focus,
+.form-control-dark:active,
+.form-control-dark:hover{
+    background-color: #1c2a42;
+    border: 1px solid #2b3b57;
+    color: white;
+    border-radius: 8px;
+}
+
+.form-control-dark:focus{
+    border-color: #22c55e;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.25);
+}
+
+.form-control-dark::placeholder{
+    color: #64748b;
+}
+
+    
+</style>
+<body>
+     <header class="hero-header">
+                <h1 class="header-text">Pembayaran</h1>
+            </header>
+            
+<div class="app-layout">
+
+    <aside class="sidebar">
+    <div class="brand">
+        <span class="text-white fw-bold">Amikom Mini</span><span class="text-success fw-bold"> Soccer</span>
+    </div>
+
+    <div>
+        <div class="sidebar-section">Menu</div>
+        <a href="#" class="sidebar-item">
+            <i class="bi bi-house-fill"></i> Beranda
+        </a>
+        <a href="#" class="sidebar-item">
+            <i class="bi bi-calendar-fill"></i> Jadwal Lapangan
+        </a>
+        <a href="#" class="sidebar-item active">
+            <i class="bi bi-credit-card-fill"></i> Pembayaran
+        </a>
+    </div>
+
+    <div>
+        <div class="sidebar-section">Akun</div>
+        <a href="#" class="sidebar-item">
+            <i class="bi bi-person-fill"></i> Profil Dan Riwayat
+        </a>
+    </div>
+</aside>
+    <main class="main-content">
+        <div class="content-center">
+            
+            <section class="card-dark">
+    <h2>Pilih Bank Tujuan Transfer</h2>
+    <div class="row g-3" id="bankOptions">
+        <div class="col-4">
+            <div class="bank-option" onclick="pilihBank(this, 'BCA', 'XXXXXXXX')">BCA</div>
+        </div>
+        <div class="col-4">
+            <div class="bank-option" onclick="pilihBank(this, 'Mandiri', 'XXXXXXXX')">Mandiri</div>
+        </div>
+        <div class="col-4">
+            <div class="bank-option" onclick="pilihBank(this, 'BRI', 'XXXXXXXX')">BRI</div>
+        </div>
+    </div>
+
+    <!-- Nomor rekening, muncul setelah bank dipilih -->
+    <div id="rekeningBox" class="rekening-box mt-3" style="display:none;">
+        <small class="text-uppercase" style="color:#64748b; letter-spacing:0.05em; font-size:0.7rem;">
+            Nomor Rekening Tujuan
+        </small>
+        <div class="d-flex justify-content-between align-items-center mt-1">
+            <span id="rekNum" style="font-size:1.2rem; font-weight:700; color:#fff;"></span>
+            <button type="button" class="btn btn-sm btn-outline-success" onclick="salinRekening()">
+                📋 Salin
+            </button>
+        </div>
+        <small style="color:#94a3b8;">a.n <span id="rekAtasNama">Amikom Mini Soccer</span></small>
+    </div>
+</section>
+
+<section class="card-dark">
+    <h2>Upload Bukti Transfer</h2>
+    <div class="upload-box" id="uploadBox" onclick="klikUpload()">
+    <i class="bi bi-cloud-upload fs-3" id="uploadIcon"></i>
+    <p class="mb-0 mt-2" id="uploadText">Klik untuk upload foto bukti transfer</p>
+    <small id="uploadSub">Format: JPG, PNG, PDF - Maks 5MB</small>
+</div>
+<input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" hidden onchange="handleFileChange(this)">
+    <div class="warn-note mt-3">
+        <span>Pastikan foto bukti transfer jelas dan terbaca. Admin akan memverifikasi paling lambat 1×24 jam. Booking belum aktif sebelum pembayaran diverifikasi.</span>
+    </div>
+</section>
+
+            <section class="card-dark">
+                <h2>Catatan Tambahan (Opsional)</h2>
+                <textarea class="form-control form-control-dark" id="CatatanTambahan" rows="4" placeholder="Masukkan catatan tambahan jika ada..."></textarea>
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                <a href="#" class="btn btn-dark"><i class="bi bi-arrow-left me-2"></i>Kembali</a>
+                <button type="button" class="btn btn-success" onclick="submitPembayaran()">Kirim Bukti Pembayaran</button>
+            </div>
+            </section>
+        </div>
+            
+        </main>
+
+        <aside class="summary-panel">
+
+    <div class="card-dark">
+        <h2>Ringkasan Pesanan</h2>
+
+        <div class="summary-row">
+            <span class="label">ID Booking</span>
+            <span class="value">BR-0413</span>
+        </div>
+        <div class="summary-row">
+            <span class="label">Nama</span>
+            <span class="value">Budi Santoso</span>
+        </div>
+        <div class="summary-row">
+            <span class="label">Lapangan</span>
+            <span class="value">Lapangan A</span>
+        </div>
+        <div class="summary-row">
+            <span class="label">Tanggal</span>
+            <span class="value">23 Juni 2026</span>
+        </div>
+        <div class="summary-row">
+            <span class="label">Waktu</span>
+            <span class="value">10.00 - 12.00</span>
+        </div>
+        <div class="summary-row">
+            <span class="label">Durasi</span>
+            <span class="value">2 Jam</span>
+        </div>
+        <div class="summary-row">
+            <span class="label">Harga/Jam</span>
+            <span class="value">Rp 80.000</span>
+        </div>
+        <div class="summary-row">
+            <span class="label">Status</span>
+            <span class="badge-status">Menunggu Bayar</span>
+        </div>
+
+        <div class="summary-total">
+            <span class="label">Total</span>
+            <span class="value">Rp 160.000</span>
+        </div>
+    </div>
+
+    <div class="card-dark">
+        <h2>Langkah Pembayaran</h2>
+        <ul class="steps-list">
+            <li>
+                <div class="step-num">1</div>
+                <span>Transfer ke rekening yang tertera sesuai jumlah total.</span>
+            </li>
+            <li>
+                <div class="step-num">2</div>
+                <span>Upload foto/screenshot bukti transfer yang jelas.</span>
+            </li>
+            <li>
+                <div class="step-num">3</div>
+                <span>Admin memverifikasi & booking kamu aktif.</span>
+            </li>
+        </ul>
+    </div>
+
+</aside>
+      
+</div>
+<script>
+let selectedBank ;
+let selectedRekening;
+let uploadedFile;
+
+function pilihBank(el, bankName, nomorRekening) {
+    document.querySelectorAll('.bank-option').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+
+    selectedBank = bankName;
+    selectedRekening = nomorRekening;
+
+    const rekBox = document.getElementById('rekeningBox');
+    rekBox.style.display = 'block';
+    document.getElementById('rekNum').textContent = nomorRekening;
+}
+
+function salinRekening() {
+    if (!selectedRekening) return;
+
+    navigator.clipboard.writeText(selectedRekening.replace(/\s/g, '')).catch(() => {});
+
+    const btn = event.target;
+    const originalText = btn.textContent;
+    btn.textContent = '✓ Tersalin';
+    setTimeout(() => {
+        btn.textContent = originalText;
+    }, 1500);
+}
+
+function klikUpload() {
+    document.getElementById('fileInput').click();
+}
+
+function handleFileChange(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+
+    if (!allowedTypes.includes(file.type)) {
+        alert('Format file tidak didukung. Gunakan JPG, PNG, atau PDF.');
+        input.value = '';
+        return;
+    }
+
+    if (file.size > maxSize) {
+        alert('Ukuran file terlalu besar. Maksimal 5MB.');
+        input.value = '';
+        return;
+    }
+
+    uploadedFile = file;
+
+    const zone = document.getElementById('uploadBox');
+    zone.style.borderColor = '#4ade80';
+    zone.style.color = '#4ade80';
+
+    document.getElementById('uploadIcon').className = 'bi bi-check-circle-fill fs-3';
+    document.getElementById('uploadText').textContent = `${file.name} berhasil diunggah`;
+    document.getElementById('uploadSub').textContent = 'Klik untuk ganti file';
+}
+
+function submitPembayaran() {
+    if (!selectedBank) {
+        alert('Silakan pilih bank tujuan transfer terlebih dahulu.');
+        return;
+    }
+    if (!uploadedFile) {
+        alert('Silakan upload bukti transfer terlebih dahulu.');
+        return;
+    }
+
+    const catatan = document.getElementById('CatatanTambahan').value;
+
+    console.log('Bank dipilih:', selectedBank);
+    console.log('File bukti transfer:', uploadedFile.name);
+    console.log('Catatan tambahan:', catatan);
+
+    alert('Bukti pembayaran berhasil dikirim! Admin akan memverifikasi paling lambat 1x24 jam.');
+}
+</script>
+</body>
