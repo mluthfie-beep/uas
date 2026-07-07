@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FutsalPro — Profil & Riwayat</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+.layout{display:grid;grid-template-columns:290px 1fr;gap:18px}
+
+/* Profile card */
+.profile-card{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;position:sticky;top:80px}
+.pc-cover{height:90px;background:linear-gradient(135deg,#0f2d1a,#1a4d35);position:relative}
+.pc-cover::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 30% 50%,rgba(0,230,118,0.15) 0%,transparent 60%)}
+.pc-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--slate),var(--green));display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;position:absolute;bottom:-32px;left:22px;border:4px solid var(--navy-mid);font-family:'Space Grotesk',sans-serif;z-index:2}
+.pc-body{padding:44px 22px 20px}
+.pc-name{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:800;margin-bottom:2px}
+.pc-email{font-size:12.5px;color:var(--muted);margin-bottom:14px}
+.pc-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.pcs{background:var(--navy-light);border-radius:9px;padding:12px;text-align:center}
+.pcs-val{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:800;color:var(--green)}
+.pcs-lbl{font-size:10.5px;color:var(--muted);margin-top:2px}
+.divider{height:1px;background:rgba(255,255,255,0.07);margin:0 0 14px}
+.detail-row{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:9px}
+.detail-row .k{color:var(--muted)}
+.detail-row .v{font-weight:600}
+
+/* Edit form */
+.edit-section{margin-top:14px;display:none}
+.edit-section.show{display:block}
+
+/* Tabs */
+.htabs{display:flex;gap:4px;background:var(--navy-light);border-radius:9px;padding:4px;margin-bottom:18px;width:fit-content}
+.htab{padding:7px 16px;border-radius:6px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;user-select:none}
+.htab:hover{color:var(--white)}
+.htab.active{background:var(--navy-mid);color:var(--white);font-weight:600}
+
+/* Tab panels */
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* History cards */
+.bh-card{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:16px 18px;margin-bottom:10px;display:flex;align-items:center;gap:16px;transition:border-color .15s;cursor:default}
+.bh-card:hover{border-color:rgba(255,255,255,0.13)}
+.bh-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.bh-icon.g{background:var(--green-glow)}
+.bh-icon.a{background:rgba(255,183,3,0.12)}
+.bh-icon.r{background:rgba(255,76,106,0.1)}
+.bh-main{flex:1}
+.bh-title{font-size:13.5px;font-weight:700;margin-bottom:3px}
+.bh-sub{font-size:12px;color:var(--muted)}
+.bh-right{text-align:right}
+.bh-price{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:800;color:var(--green)}
+.bh-date{font-size:11px;color:var(--muted);margin-top:3px}
+
+/* Notif cards */
+.notif-card{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:14px;transition:all .15s}
+.notif-card:hover{border-color:rgba(255,255,255,0.12)}
+.notif-card.unread{border-color:rgba(0,230,118,0.18);background:rgba(0,230,118,0.025)}
+.notif-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.notif-title{font-size:13px;font-weight:700;margin-bottom:3px}
+.notif-body{font-size:12px;color:var(--muted);line-height:1.65}
+.notif-time{font-size:11px;color:var(--muted);white-space:nowrap;margin-left:auto;padding-left:12px}
+.unread-dot{width:8px;height:8px;background:var(--green);border-radius:50%;margin-top:6px;flex-shrink:0}
+
+/* Activity chart */
+.activity-grid{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:8px}
+.act-cell{width:16px;height:16px;border-radius:3px;cursor:default;transition:transform .1s}
+.act-cell:hover{transform:scale(1.2)}
+.act-0{background:var(--navy-light)}
+.act-1{background:rgba(0,230,118,0.2)}
+.act-2{background:rgba(0,230,118,0.45)}
+.act-3{background:var(--green)}
+.act-months{display:flex;gap:18px;font-size:10px;color:var(--muted);margin-bottom:14px}
+
+/* Loyalty card */
+.loyalty-card{background:linear-gradient(135deg,#0f2d1a,#1a4a30);border:1px solid rgba(0,230,118,0.2);border-radius:14px;padding:22px;position:relative;overflow:hidden;margin-top:14px}
+.loyalty-card::before{content:'⭐';position:absolute;right:20px;top:16px;font-size:40px;opacity:.15}
+.loyalty-title{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--green);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.loyalty-level{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:900;margin-bottom:4px}
+.loyalty-pts{font-size:12px;color:var(--muted);margin-bottom:14px}
+.loyalty-bar-wrap{height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden}
+.loyalty-bar-fill{height:100%;border-radius:3px;background:var(--green);width:60%}
+.loyalty-next{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:5px}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap');
+:root{--navy:#0D1B2A;--navy-mid:#162435;--navy-light:#1E3148;--green:#00E676;--green-dim:#00C864;--green-glow:rgba(0,230,118,0.13);--amber:#FFB703;--slate:#3D5A80;--slate-light:#5B7FA6;--white:#F5F7FA;--muted:#8FA5BE;--danger:#FF4C6A}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;overflow-x:hidden}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:230px;background:var(--navy-mid);border-right:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;z-index:200}
+.logo{padding:24px 20px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.logo-mark{display:flex;align-items:center;gap:10px}
+.logo-icon{width:34px;height:34px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px}
+.logo-text{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:800;letter-spacing:-.5px}
+.logo-text span{color:var(--green)}
+.role-pill{margin:14px 20px 0;background:var(--green-glow);border:1px solid rgba(0,230,118,0.28);border-radius:20px;padding:4px 11px;font-size:10.5px;font-weight:700;color:var(--green);letter-spacing:.6px;text-transform:uppercase;display:inline-block}
+.nav{padding:20px 10px;flex:1}
+.nav-section{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:0 10px;margin:14px 0 6px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--muted);transition:all .15s;margin-bottom:2px;border:1px solid transparent;text-decoration:none}
+.nav-item:hover{background:var(--navy-light);color:var(--white)}
+.nav-item.active{background:var(--green-glow);color:var(--green);border-color:rgba(0,230,118,0.2)}
+.nav-item .ico{width:17px;text-align:center;font-size:15px}
+.nav-badge{margin-left:auto;background:var(--danger);color:#fff;font-size:10px;font-weight:700;border-radius:10px;padding:2px 6px}
+.sidebar-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,0.06)}
+.user-row{display:flex;align-items:center;gap:10px}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--slate),var(--slate-light));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+.uname{font-size:12.5px;font-weight:600}
+.urole{font-size:11px;color:var(--muted)}
+.topbar{position:sticky;top:0;height:62px;background:var(--navy-mid);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:100}
+.page-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.notif-btn{width:34px;height:34px;background:var(--navy-light);border:1px solid rgba(255,255,255,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;position:relative;text-decoration:none}
+.notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;background:var(--danger);border-radius:50%;border:1.5px solid var(--navy-mid)}
+.main{margin-left:230px;min-height:100vh}
+.content{padding:28px}
+.btn{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all .15s}
+.btn-primary{background:var(--green);color:var(--navy)}
+.btn-primary:hover{background:var(--green-dim);box-shadow:0 4px 16px rgba(0,230,118,0.25)}
+.btn-ghost{background:var(--navy-light);color:var(--muted);border:1px solid rgba(255,255,255,0.08)}
+.btn-ghost:hover{color:var(--white)}
+.btn-danger{background:rgba(255,76,106,0.15);color:var(--danger);border:1px solid rgba(255,76,106,0.25)}
+.card{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:12px;overflow:hidden}
+.card-header{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:700}
+.card-body{padding:20px}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.badge.green{background:var(--green-glow);color:var(--green);border:1px solid rgba(0,230,118,0.25)}
+.badge.amber{background:rgba(255,183,3,0.12);color:var(--amber);border:1px solid rgba(255,183,3,0.25)}
+.badge.red{background:rgba(255,76,106,0.12);color:var(--danger);border:1px solid rgba(255,76,106,0.25)}
+.badge.blue{background:rgba(91,127,166,0.15);color:var(--slate-light);border:1px solid rgba(91,127,166,0.25)}
+.field-group{margin-bottom:14px}
+.field-label{display:block;font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.field-input{width:100%;background:var(--navy-light);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px 13px;color:var(--white);font-size:13.5px;font-family:'Inter',sans-serif;outline:none;transition:border-color .15s}
+.field-input:focus{border-color:var(--green)}
+.field-input option{background:var(--navy-mid)}
+
+
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-mark">
+      <div class="logo-icon">⚽</div>
+      <span class="logo-text">Futsal<span>Pro</span></span>
+    </div>
+  </div>
+  <span class="role-pill">Pelanggan</span>
+  <nav class="nav">
+    <div class="nav-section">Menu</div>
+    <a class="nav-item" href="01_home.html"><span class="ico">🏠</span> Beranda</a>
+    <a class="nav-item" href="02_jadwal.html"><span class="ico">📅</span> Jadwal Lapangan</a>
+    <a class="nav-item" href="03_pembayaran.html"><span class="ico">💳</span> Pembayaran</a>
+    <div class="nav-section">Admin</div>
+    <a class="nav-item" href="04_laporan.html"><span class="ico">📊</span> Laporan <span class="nav-badge">2</span></a>
+    <div class="nav-section">Akun</div>
+    <a class="nav-item active" href="05_profil.html"><span class="ico">👤</span> Profil & Riwayat</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-row">
+      <div class="avatar">BS</div>
+      <div><div class="uname">Budi Santoso</div><div class="urole">Pelanggan</div></div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="page-title">👤 Profil & Riwayat</div>
+    <div class="topbar-right">
+      <a class="notif-btn" href="#">🔔<span class="notif-dot"></span></a>
+      <a href="02_jadwal.html" class="btn btn-primary">+ Booking Baru</a>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="layout">
+
+      <!-- LEFT: PROFILE CARD -->
+      <div>
+        <div class="profile-card">
+          <div class="pc-cover">
+            <div class="pc-avatar">BS</div>
+          </div>
+          <div class="pc-body">
+            <div class="pc-name">Budi Santoso</div>
+            <div class="pc-email">budi.santoso@email.com</div>
+            <div class="pc-stats">
+              <div class="pcs"><div class="pcs-val">12</div><div class="pcs-lbl">Total Booking</div></div>
+              <div class="pcs"><div class="pcs-val" style="color:var(--amber)">Rp 1,4jt</div><div class="pcs-lbl">Total Bayar</div></div>
+            </div>
+            <div class="divider"></div>
+            <div class="detail-row"><span class="k">No. Telepon</span><span class="v">0812-3456-7890</span></div>
+            <div class="detail-row"><span class="k">Bergabung</span><span class="v">Januari 2026</span></div>
+            <div class="detail-row"><span class="k">Peran</span><span class="v"><span class="badge blue">Pelanggan</span></span></div>
+            <div class="detail-row"><span class="k">Lap. Favorit</span><span class="v">Lapangan A</span></div>
+            <div class="detail-row"><span class="k">Booking Aktif</span><span class="v" style="color:var(--amber)">1 booking</span></div>
+            <div class="divider"></div>
+            <button class="btn btn-ghost" style="width:100%;margin-bottom:8px" onclick="toggleEdit()">✏️ Edit Profil</button>
+            <div class="edit-section" id="edit-section">
+              <div class="field-group"><label class="field-label">Nama</label><input class="field-input" value="Budi Santoso"></div>
+              <div class="field-group"><label class="field-label">Email</label><input class="field-input" value="budi.santoso@email.com"></div>
+              <div class="field-group"><label class="field-label">No. Telepon</label><input class="field-input" value="0812-3456-7890"></div>
+              <button class="btn btn-primary" style="width:100%" onclick="toggleEdit()">Simpan Perubahan</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loyalty -->
+        <div class="loyalty-card">
+          <div class="loyalty-title">🏅 Member FutsalPro</div>
+          <div class="loyalty-level">Silver Member</div>
+          <div class="loyalty-pts">1.240 poin &nbsp;·&nbsp; 60% menuju Gold</div>
+          <div class="loyalty-bar-wrap"><div class="loyalty-bar-fill"></div></div>
+          <div class="loyalty-next"><span>Silver: 1.000 pts</span><span>Gold: 2.000 pts</span></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: CONTENT TABS -->
+      <div>
+        <div class="htabs">
+          <div class="htab active" onclick="switchTab('riwayat',this)">📋 Riwayat Booking</div>
+          <div class="htab" onclick="switchTab('notif',this)">🔔 Notifikasi <span style="background:var(--danger);color:#fff;font-size:9px;font-weight:700;border-radius:10px;padding:1px 5px;margin-left:4px">2</span></div>
+          <div class="htab" onclick="switchTab('aktivitas',this)">📆 Aktivitas</div>
+        </div>
+
+        <!-- TAB: Riwayat -->
+        <div class="tab-panel active" id="tab-riwayat">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <span style="font-size:13px;font-weight:700">12 Booking Tercatat</span>
+            <select class="field-input" style="width:auto;font-size:12px;padding:7px 12px">
+              <option>Semua Status</option>
+              <option>Dikonfirmasi</option>
+              <option>Menunggu</option>
+              <option>Dibatalkan</option>
+            </select>
+          </div>
+
+          <div class="bh-card">
+            <div class="bh-icon a">🏟️</div>
+            <div class="bh-main">
+              <div class="bh-title">Lapangan A — 2 Jam</div>
+              <div class="bh-sub">23 Juni 2026 · 10.00–12.00 · <span style="color:var(--green);font-weight:600">#BK-0413</span></div>
+            </div>
+            <div class="bh-right">
+              <div class="bh-price" style="color:var(--amber)">Rp 160.000</div>
+              <span class="badge amber" style="font-size:10px;margin-top:4px;display:inline-flex"><span class="badge-dot"></span>Menunggu</span>
+            </div>
+          </div>
+
+          <div class="bh-card">
+            <div class="bh-icon g">🏟️</div>
+            <div class="bh-main">
+              <div class="bh-title">Lapangan A — 1 Jam</div>
+              <div class="bh-sub">14 Jun 2026 · 09.00–10.00 · <span style="color:var(--green);font-weight:600">#BK-0398</span></div>
+            </div>
+            <div class="bh-right">
+              <div class="bh-price">Rp 80.000</div>
+              <span class="badge green" style="font-size:10px;margin-top:4px;display:inline-flex"><span class="badge-dot"></span>Dikonfirmasi</span>
+            </div>
+          </div>
+
+          <div class="bh-card">
+            <div class="bh-icon g">🏟️</div>
+            <div class="bh-main">
+              <div class="bh-title">Lapangan B — 2 Jam</div>
+              <div class="bh-sub">5 Jun 2026 · 17.00–19.00 · <span style="color:var(--green);font-weight:600">#BK-0381</span></div>
+            </div>
+            <div class="bh-right">
+              <div class="bh-price">Rp 160.000</div>
+              <span class="badge green" style="font-size:10px;margin-top:4px;display:inline-flex"><span class="badge-dot"></span>Dikonfirmasi</span>
+            </div>
+          </div>
+
+          <div class="bh-card">
+            <div class="bh-icon r">🏟️</div>
+            <div class="bh-main">
+              <div class="bh-title">Lapangan C — 1 Jam</div>
+              <div class="bh-sub">28 Mei 2026 · 14.00–15.00 · <span style="color:var(--green);font-weight:600">#BK-0365</span></div>
+            </div>
+            <div class="bh-right">
+              <div class="bh-price" style="color:var(--danger)">Rp 75.000</div>
+              <span class="badge red" style="font-size:10px;margin-top:4px;display:inline-flex"><span class="badge-dot"></span>Dibatalkan</span>
+            </div>
+          </div>
+
+          <div class="bh-card">
+            <div class="bh-icon g">🏟️</div>
+            <div class="bh-main">
+              <div class="bh-title">Lapangan A — 3 Jam</div>
+              <div class="bh-sub">12 Mei 2026 · 19.00–22.00 · <span style="color:var(--green);font-weight:600">#BK-0352</span></div>
+            </div>
+            <div class="bh-right">
+              <div class="bh-price">Rp 240.000</div>
+              <span class="badge green" style="font-size:10px;margin-top:4px;display:inline-flex"><span class="badge-dot"></span>Dikonfirmasi</span>
+            </div>
+          </div>
+
+          <div style="text-align:center;padding:16px 0 4px">
+            <button class="btn btn-ghost">Muat 7 Booking Lainnya ↓</button>
+          </div>
+        </div>
+
+        <!-- TAB: Notifikasi -->
+        <div class="tab-panel" id="tab-notif">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <span style="font-size:13px;font-weight:700">4 Notifikasi</span>
+            <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px">Tandai Semua Dibaca</button>
+          </div>
+
+          <div class="notif-card unread">
+            <div class="notif-icon" style="background:rgba(255,183,3,0.12)">⏳</div>
+            <div style="flex:1">
+              <div class="notif-title">Pembayaran Sedang Diverifikasi</div>
+              <div class="notif-body">Bukti transfer <strong>#BK-0413</strong> sudah diterima. Admin sedang memverifikasi. Mohon tunggu 1×24 jam.</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+              <span class="notif-time">30 mnt lalu</span>
+              <div class="unread-dot"></div>
+            </div>
+          </div>
+
+          <div class="notif-card unread">
+            <div class="notif-icon" style="background:var(--green-glow)">✅</div>
+            <div style="flex:1">
+              <div class="notif-title">Booking Dikonfirmasi</div>
+              <div class="notif-body">Booking <strong>#BK-0398</strong> pada 14 Juni, Lapangan A 09.00–10.00 telah dikonfirmasi. Selamat bermain!</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+              <span class="notif-time">2 jam lalu</span>
+              <div class="unread-dot"></div>
+            </div>
+          </div>
+
+          <div class="notif-card">
+            <div class="notif-icon" style="background:rgba(255,76,106,0.1)">❌</div>
+            <div style="flex:1">
+              <div class="notif-title">Booking Dibatalkan</div>
+              <div class="notif-body">Booking <strong>#BK-0365</strong> pada 28 Mei, Lapangan C dibatalkan karena bukti transfer tidak valid. Hubungi admin.</div>
+            </div>
+            <span class="notif-time">28 Mei</span>
+          </div>
+
+          <div class="notif-card">
+            <div class="notif-icon" style="background:var(--green-glow)">🎉</div>
+            <div style="flex:1">
+              <div class="notif-title">Selamat Datang di FutsalPro!</div>
+              <div class="notif-body">Akun Anda berhasil terdaftar. Mulai booking lapangan favorit Anda sekarang dengan mudah dan cepat!</div>
+            </div>
+            <span class="notif-time">Jan 2026</span>
+          </div>
+        </div>
+
+        <!-- TAB: Aktivitas -->
+        <div class="tab-panel" id="tab-aktivitas">
+          <div style="font-size:13px;font-weight:700;margin-bottom:6px">Frekuensi Booking — 6 Bulan Terakhir</div>
+          <div style="font-size:11.5px;color:var(--muted);margin-bottom:14px">Setiap kotak mewakili satu minggu</div>
+          <div class="act-months">
+            <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>Mei</span><span>Jun</span>
+          </div>
+          <div class="activity-grid" id="act-grid"></div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);margin-bottom:24px">
+            <span>Jarang</span>
+            <div style="display:flex;gap:3px">
+              <div style="width:12px;height:12px;border-radius:2px" class="act-0"></div>
+              <div style="width:12px;height:12px;border-radius:2px" class="act-1"></div>
+              <div style="width:12px;height:12px;border-radius:2px" class="act-2"></div>
+              <div style="width:12px;height:12px;border-radius:2px" class="act-3"></div>
+            </div>
+            <span>Sering</span>
+          </div>
+
+          <div style="font-size:13px;font-weight:700;margin-bottom:12px">Statistik Pribadi</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
+            <div style="background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:14px;text-align:center">
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:900;color:var(--green)">Sabtu</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:3px">Hari Favorit</div>
+            </div>
+            <div style="background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:14px;text-align:center">
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:900;color:var(--amber)">19.00</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:3px">Jam Favorit</div>
+            </div>
+            <div style="background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:14px;text-align:center">
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:900;color:var(--slate-light)">2 jam</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:3px">Durasi Rata-rata</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+function switchTab(name, el) {
+  document.querySelectorAll('.htab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+function toggleEdit() {
+  const s = document.getElementById('edit-section');
+  s.classList.toggle('show');
+}
+
+// Generate activity grid
+const actGrid = document.getElementById('act-grid');
+const pattern = [0,0,1,0,2,1,0,1,3,2,1,0,1,2,0,0,1,0,2,3,1,2,0,1,0,2,1,3,2,0,1,0,0,1,2,1,0,2,1,0,3,2,1,0,1,0,2,1,3,2,1,0,2,1,0,0,1,2,3,1,2,0,1,2,0,1,2,3,2,1,0,1,2,1,0,2,3,2,1,0,1,2,0,1,2,1,0,2,3,1,2,0,0,1,2,3,2,1,0,1,2,1,0,0,1,2,1,3,2,0,1,0,0,1,2,1,0,2,1,0,3,2,1,0,1,0];
+pattern.forEach(v => {
+  const c = document.createElement('div');
+  c.className = 'act-cell act-' + v;
+  actGrid.appendChild(c);
+});
+</script>
+
+</body>
+</html>
