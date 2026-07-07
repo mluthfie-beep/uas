@@ -1,0 +1,107 @@
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url(aset/main.png) no-repeat center center fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .login-container {
+            background-blend-mode: lighten;
+            background: transparent;
+            padding: 40px;
+            border: 1px solid #d7128f;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.252);
+            width: 100%;
+            max-width: 350px;
+            backdrop-filter: blur(20px);
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #d7128f;
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+            color: #ffffff;
+        }
+
+        .form-group i {
+            position: absolute;
+            right: 15px;
+            bottom: 12px;
+            color: #ffffff;
+            font-size: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cccccc87;
+            border-radius: 40px;
+            color: #ffffff;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            background:transparent
+        }
+
+        .form-group input::placeholder {
+         color: #ffffff80;
+}
+
+        .form-group input:focus {
+            border-color: #d7128f;
+            outline: none;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-login:hover {
+            background-color: #c92828;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ffffff;
+        }
+
+        .footer-text a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
