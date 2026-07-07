@@ -7,7 +7,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: url(main.png) no-repeat center center fixed;
+            background: url(aset/main.png) no-repeat center center fixed;
             background-size: cover;
             background-position: center;
         }
