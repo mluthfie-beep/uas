@@ -3,31 +3,466 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Login</title>
-    <link rel="stylesheet" href="login.css">
-     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Amikom Mini Soccer — Booking Lapangan Futsal</title>
+
+    <!--Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!--Bootstrap CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--bootstrap icon-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!--css-->
+    <link rel="stylesheet" href="style1.css">
 </head>
 <body>
 
-    <div class="login-container">
-        <h2>Selamat Datang</h2>
-        <form action="beranda.html" method="GET">
-            <div class="form-group">
-                <label for="username">Username atau Email</label>
-                <input type="text" id="username" name="username" required placeholder="Masukkan Username atau Email Anda">
-                <i class='bx bxs-user'></i>
+    <!-- ============ NAVBAR ============ -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow" id="mainNavbar">
+        <div class="container">
+
+            <!-- Sidebar toggle (hidden dropdown menu) -->
+            <button class="btn btn-sidebar-toggle me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-label="Buka menu">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <a class="navbar-brand fw-bold" href="#beranda">
+                <i class="bx bx-football"></i> Amikom Mini Soccer
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navCollapse" aria-controls="navCollapse" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navCollapse">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="#beranda">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="#lapangan">Lapangan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="#keunggulan">Keunggulan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="#"><i class="bi bi-bell-fill text-warning"></i></a>
+                    </li>
+
+                    <!-- Guest indicator -->
+                    <li class="nav-item d-flex align-items-center" id="guestBadgeWrap">
+                        <span class="guest-badge" id="guestBadge"><i class="bi bi-person-fill me-1"></i>Mode Tamu</span>
+                    </li>
+
+                    <!-- ===== AUTH AREA — guest (default) ===== -->
+                    <li class="nav-item ms-lg-2" id="navAuthGuest">
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-sm btn-outline-light fw-semibold px-3" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                Masuk
+                            </button>
+                            <button type="button" class="btn btn-sm btn-accent fw-semibold px-3" data-bs-toggle="modal" data-bs-target="#signupModal">
+                                Daftar
+                            </button>
+                        </div>
+                    </li>
+
+                    <!-- ===== AUTH AREA — logged in (hidden by default) ===== -->
+                    <li class="nav-item dropdown ms-lg-2 d-none" id="navAuthUser">
+                        <button class="btn btn-user-menu dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="avatar-circle avatar-sm" id="navUserInitials">?</span>
+                            <span class="d-none d-md-inline ms-2" id="navUserName">Pengguna</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person-fill me-2"></i>Profil &amp; Riwayat</a></li>
+                            <li><a class="dropdown-item" href="#booking"><i class="bi bi-calendar-check me-2"></i>Booking Saya</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><button type="button" class="dropdown-item" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Keluar</button></li>
+                        </ul>
+                    </li>
+
+                    <!--tombol cta-->
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-sm fw-semibold px-4 btn-accent js-require-auth" href="#booking">
+                            <i class="bi bi-bookmark-plus me-1"></i>Pesan Sekarang
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required placeholder="Masukkan password Anda">
-                <i class='bx bxs-lock-alt'></i>
+        </div>
+    </nav>
+
+    <!-- ============ OFFCANVAS SIDEBAR (hidden, dropdown-style) ============ -->
+    <div class="offcanvas offcanvas-start sidebar-menu" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+        <div class="offcanvas-header">
+            <a href="#beranda" class="offcanvas-title fw-bold" id="sidebarMenuLabel">
+                <i class="bx bx-football me-1"></i>FutsalPro
+            </a>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column">
+
+            <span class="sidebar-heading">Menu</span>
+            <ul class="sidebar-nav">
+                <li><a href="#beranda"><i class="bi bi-house-door-fill"></i>Beranda</a></li>
+                <li><a href="#lapangan"><i class="bi bi-calendar2-week-fill"></i>Jadwal Lapangan</a></li>
+                <li><a href="#booking"><i class="bi bi-credit-card-fill"></i>Pembayaran</a></li>
+            </ul>
+
+            <span class="sidebar-heading">Admin</span>
+            <ul class="sidebar-nav">
+                <li><a href="#"><i class="bi bi-bar-chart-fill"></i>Laporan <span class="dot-badge"></span></a></li>
+            </ul>
+
+            <span class="sidebar-heading">Akun</span>
+            <ul class="sidebar-nav">
+                <li><a href="#"><i class="bi bi-person-fill"></i>Profil &amp; Riwayat</a></li>
+            </ul>
+
+            <!-- Guest profile (default) -->
+            <div class="sidebar-profile mt-auto" id="sidebarProfileGuest">
+                <div class="avatar-circle avatar-guest"><i class="bi bi-person"></i></div>
+                <div class="flex-grow-1">
+                    <div class="fw-semibold small text-white">Tamu</div>
+                    <div class="text-muted-soft small">Belum masuk</div>
+                </div>
+                <button type="button" class="btn btn-sm btn-accent" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="offcanvas">Masuk</button>
             </div>
-            <button type="submit" class="btn-login">Masuk</button>
-        </form>
-        <div class="footer-text">
-           <p>Belum punya akun?</p><a href="#">Daftar di sini</a>
+
+            <!-- Logged-in profile (hidden until user masuk/daftar) -->
+            <div class="sidebar-profile mt-auto d-none" id="sidebarProfileUser">
+                <div class="avatar-circle" id="sidebarUserInitials">?</div>
+                <div class="flex-grow-1">
+                    <div class="fw-semibold small text-white" id="sidebarUserName">Pengguna</div>
+                    <div class="text-muted-soft small">Pelanggan</div>
+                </div>
+                <button type="button" class="btn btn-sm btn-field" id="sidebarLogoutBtn">Keluar</button>
+            </div>
         </div>
     </div>
 
+    <!-- ============ HERO CAROUSEL (compact) ============ -->
+    <div id="heroCarousel" class="carousel slide carousel-fade hero-carousel" data-bs-ride="carousel" data-bs-interval="4500">
+
+        <div class="carousel-inner">
+
+            <!--Slide 1-->
+            <div class="carousel-item active slide-1">
+                <div class="container slide-content">
+                    <div class="row align-items-center h-100">
+                        <div class="col-lg-8">
+                            <span class="badge eyebrow-badge mb-3 px-3">Sistem Booking Digital</span>
+                            <h1 class="fw-bold text-white lh-sm mb-3">
+                                Pesan Lapangan<br>Futsal Kapan Saja
+                            </h1>
+                            <p class="text-white text-opacity-75 mb-4 slide-desc">
+                                Tidak perlu datang langsung atau menghubungi admin berkali-kali. Cek jadwal, booking, dan bayar dalam satu platform.
+                            </p>
+                            <div class="d-flex flex-wrap gap-3">
+                                <a href="#lapangan" class="btn fw-semibold shadow btn-accent">
+                                    <i class="bi bi-calendar-check me-2"></i>Lihat Jadwal
+                                </a>
+                                <a href="#keunggulan" class="btn btn-outline-light">Pelajari Lebih Lanjut</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 d-none d-lg-flex justify-content-center">
+                            <i class="bi bi-dribbble slide-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--slide 2-->
+            <div class="carousel-item slide-2">
+                <div class="container slide-content">
+                    <div class="row align-items-center h-100">
+                        <div class="col-lg-8">
+                            <span class="badge eyebrow-badge mb-3 px-3">Fasilitas Lengkap</span>
+                            <h1 class="fw-bold text-white lh-sm mb-3">
+                                3 Lapangan Siap<br>Untuk Tim Kamu
+                            </h1>
+                            <p class="text-white text-opacity-75 mb-4 slide-desc">
+                                Rumput sintetis, sirkulasi udara nyaman, dan pencahayaan malam untuk pengalaman bermain terbaik.
+                            </p>
+                            <a href="#lapangan" class="btn fw-semibold shadow btn-accent">
+                                <i class="bi bi-grid-3x3-gap-fill me-2"></i>Lihat Lapangan
+                            </a>
+                        </div>
+                        <div class="col-lg-4 d-none d-lg-flex justify-content-center">
+                            <i class="bi bi-flag-fill slide-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--slide 3-->
+            <div class="carousel-item slide-3">
+                <div class="container slide-content">
+                    <div class="row align-items-center h-100">
+                        <div class="col-lg-8">
+                            <span class="badge eyebrow-badge mb-3 px-3">Cepat &amp; Aman</span>
+                            <h1 class="fw-bold text-white lh-sm mb-3">
+                                Booking dan Bayar<br>Cukup Dalam 1 Menit
+                            </h1>
+                            <p class="text-white text-opacity-75 mb-4 slide-desc">
+                                Pantau status booking secara real-time, tanpa risiko jadwal bentrok atau double booking.
+                            </p>
+                            <a href="#booking" class="btn fw-semibold shadow btn-accent js-require-auth">
+                                <i class="bi bi-lightning-charge-fill me-2"></i>Mulai Booking
+                            </a>
+                        </div>
+                        <div class="col-lg-4 d-none d-lg-flex justify-content-center">
+                            <i class="bi bi-phone-fill slide-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="carousel-indicators hero-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <!-- ============ STATS STRIP ============ -->
+    <section class="stats-strip">
+        <div class="container">
+            <div class="row g-3 g-md-4">
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-number text-accent" data-count="3">0</div>
+                        <div class="stat-label">Lapangan Tersedia</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-number text-warning-soft">24/7</div>
+                        <div class="stat-label">Akses Online</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-number text-info-soft" data-count="186">0</div>
+                        <div class="stat-label">Booking Bulan Ini</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-number text-danger-soft" data-count="0">0</div>
+                        <div class="stat-label">Double Booking</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ LAPANGAN KAMI ============ -->
+    <section id="lapangan" class="section-lapangan">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="section-eyebrow">Pilihan Lapangan</span>
+                <h2 class="section-title">Lapangan Kami</h2>
+            </div>
+
+            <div class="row g-4">
+
+                <!-- Lapangan A -->
+                <div class="col-md-4">
+                    <div class="field-card field-card-green">
+                        <span class="field-badge badge-tersedia">Tersedia</span>
+                        <svg class="field-pitch" viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="4" width="112" height="82" rx="4" fill="none" stroke="currentColor" stroke-width="3"/>
+                            <line x1="60" y1="4" x2="60" y2="86" stroke="currentColor" stroke-width="3"/>
+                            <circle cx="60" cy="45" r="14" fill="none" stroke="currentColor" stroke-width="3"/>
+                        </svg>
+                        <div class="field-card-body">
+                            <h3 class="field-name">Lapangan A</h3>
+                            <p class="field-desc">Rumput Sintetis · AC · Indoor</p>
+                            <div class="field-footer">
+                                <div class="field-price">Rp 80.000<span>/jam</span></div>
+                                <a href="#booking" class="btn btn-sm btn-field js-require-auth">Pesan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lapangan B -->
+                <div class="col-md-4">
+                    <div class="field-card field-card-blue">
+                        <span class="field-badge badge-tersedia">Tersedia</span>
+                        <svg class="field-pitch" viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="4" width="112" height="82" rx="4" fill="none" stroke="currentColor" stroke-width="3"/>
+                            <line x1="60" y1="4" x2="60" y2="86" stroke="currentColor" stroke-width="3"/>
+                            <circle cx="60" cy="45" r="14" fill="none" stroke="currentColor" stroke-width="3"/>
+                        </svg>
+                        <div class="field-card-body">
+                            <h3 class="field-name">Lapangan B</h3>
+                            <p class="field-desc">Rumput Sintetis · Standar · Indoor</p>
+                            <div class="field-footer">
+                                <div class="field-price">Rp 80.000<span>/jam</span></div>
+                                <a href="#booking" class="btn btn-sm btn-field js-require-auth">Pesan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lapangan C -->
+                <div class="col-md-4">
+                    <div class="field-card field-card-orange">
+                        <span class="field-badge badge-hampir-penuh">Hampir Penuh</span>
+                        <svg class="field-pitch" viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="4" width="112" height="82" rx="4" fill="none" stroke="currentColor" stroke-width="3"/>
+                            <line x1="60" y1="4" x2="60" y2="86" stroke="currentColor" stroke-width="3"/>
+                            <circle cx="60" cy="45" r="14" fill="none" stroke="currentColor" stroke-width="3"/>
+                        </svg>
+                        <div class="field-card-body">
+                            <h3 class="field-name">Lapangan C</h3>
+                            <p class="field-desc">Parket · Mini · Semi-Indoor</p>
+                            <div class="field-footer">
+                                <div class="field-price">Rp 75.000<span>/jam</span></div>
+                                <a href="#booking" class="btn btn-sm btn-field js-require-auth">Pesan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ KEUNGGULAN SISTEM ============ -->
+    <section id="keunggulan" class="section-keunggulan">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="section-eyebrow">Kenapa FutsalPro</span>
+                <h2 class="section-title">Keunggulan Sistem</h2>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="bi bi-lightning-charge-fill"></i></div>
+                        <h3 class="feature-title">Booking Real-Time</h3>
+                        <p class="feature-desc">Jadwal diperbarui secara langsung. Tidak ada lagi double booking atau kesalahan pencatatan manual.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="bi bi-shield-lock-fill"></i></div>
+                        <h3 class="feature-title">Hak Akses Aman</h3>
+                        <p class="feature-desc">Sistem membedakan peran Owner, Admin, dan Pelanggan. Setiap pengguna hanya dapat mengakses fitur sesuai tugasnya.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="bi bi-clipboard-data-fill"></i></div>
+                        <h3 class="feature-title">Laporan Otomatis</h3>
+                        <p class="feature-desc">Owner dapat memantau transaksi, pemasukan, dan tingkat pemakaian lapangan kapan saja lewat dashboard.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CTA / BOOKING ============ -->
+    <section id="booking" class="section-cta">
+        <div class="container text-center">
+            <h2 class="section-title mb-3">Siap Main Bareng Tim Kamu?</h2>
+            <p class="text-muted-soft mb-4">Pesan lapangan sekarang, cukup beberapa klik dari HP kamu.</p>
+            <a href="#" class="btn btn-lg btn-accent px-5 fw-semibold js-require-auth" data-auth-action="confirm">
+                <i class="bi bi-bookmark-plus me-2"></i>Pesan Sekarang
+            </a>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="site-footer">
+        <div class="container text-center">
+            <div class="fw-bold text-white mb-2"><i class="bx bx-football"></i> Amikom Mini Soccer</div>
+            <p class="text-muted-soft small mb-0">&copy; 2026 Amikom Mini Soccer. Semua hak dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- ============ LOGIN MODAL ============ -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content auth-modal">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="loginModalLabel">Masuk ke Akun Anda</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted-soft small mb-4">Masuk untuk melanjutkan booking. Tanpa akun, kamu tetap bisa menjelajahi jadwal sebagai tamu.</p>
+                    <form id="loginForm" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label small">Email</label>
+                            <input type="email" class="form-control auth-input" id="loginEmail" placeholder="nama@email.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Kata Sandi</label>
+                            <input type="password" class="form-control auth-input" id="loginPassword" placeholder="••••••••" required minlength="6">
+                        </div>
+                        <button type="submit" class="btn btn-accent w-100 fw-semibold">Masuk</button>
+                    </form>
+                    <p class="text-center small text-muted-soft mt-4 mb-0">
+                        Belum punya akun?
+                        <a href="#" class="link-accent" id="goToSignup">Daftar di sini</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SIGNUP MODAL ============ -->
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content auth-modal">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="signupModalLabel">Buat Akun Baru</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted-soft small mb-4">Daftar sekali untuk booking lebih cepat dan menyimpan riwayat penyewaan lapangan.</p>
+                    <form id="signupForm" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label small">Nama Lengkap</label>
+                            <input type="text" class="form-control auth-input" id="signupName" placeholder="Nama kamu" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Email</label>
+                            <input type="email" class="form-control auth-input" id="signupEmail" placeholder="nama@email.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Kata Sandi</label>
+                            <input type="password" class="form-control auth-input" id="signupPassword" placeholder="••••••••" required minlength="6">
+                        </div>
+                        <button type="submit" class="btn btn-accent w-100 fw-semibold">Daftar</button>
+                    </form>
+                    <p class="text-center small text-muted-soft mt-4 mb-0">
+                        Sudah punya akun?
+                        <a href="#" class="link-accent" id="goToLogin">Masuk di sini</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script1.js"></script>
 </body>
 </html>
