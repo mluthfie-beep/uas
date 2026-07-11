@@ -79,17 +79,17 @@
     </div>
 </section>
 
-<section class="card-dark">
-    <h2>Upload Bukti Transfer</h2>
-    <div class="upload-box" id="uploadBox" onclick="klikUpload()">
-    <i class="bi bi-cloud-upload fs-3" id="uploadIcon"></i>
-    <p class="mb-0 mt-2" id="uploadText">Klik untuk upload foto bukti transfer</p>
-    <small id="uploadSub">Format: JPG, PNG, PDF - Maks 5MB</small>
-</div>
-<input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" hidden onchange="handleFileChange(this)">
-    <div class="warn-note mt-3">
-        <span>Pastikan foto bukti transfer jelas dan terbaca. Admin akan memverifikasi paling lambat 1×24 jam. Booking belum aktif sebelum pembayaran diverifikasi.</span>
-    </div>
+ <section class="card-dark">
+            <h2>Upload Bukti Transfer</h2>
+            <div class="upload-box" id="uploadBox" onclick="klikUpload()">
+            <i class="bi bi-cloud-upload fs-3" id="uploadIcon"></i>
+            <p class="mb-0 mt-2" id="uploadText">Klik untuk upload foto bukti transfer</p>
+            <small id="uploadSub">Format: JPG, PNG, PDF - Maks 5MB</small>
+        </div>
+        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" hidden onchange="handleFileChange(this)">
+            <div class="warn-note mt-3">
+                <span>Pastikan foto bukti transfer jelas dan terbaca. Admin akan memverifikasi paling lambat 1×24 jam. Booking belum aktif sebelum pembayaran diverifikasi.</span>
+            </div>
 </section>
 
             <section class="card-dark">
@@ -169,7 +169,35 @@
 </aside>
       
 </div>
+
+<div class="modal-overlay" id="customModal">
+    <div class="modal-box">
+        <i class="bi modal-icon" id="modalIcon"></i>
+        <p id="modalMessage" class="mb-0"></p>
+        <button type="button" class="btn btn-success w-100 mt-3" onclick="closeModal()">OK</button>
+    </div>
+</div>
+
 <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    if (isMobile) {
+        document.getElementById('sidebarToggle').checked = true;
+    }
+});
+
+function showModal(message, iconClass = 'bi-exclamation-triangle-fill', isSuccess = false) {
+    document.getElementById('modalMessage').textContent = message;
+    const icon = document.getElementById('modalIcon');
+    icon.className = 'bi modal-icon ' + iconClass + (isSuccess ? ' success' : '');
+    document.getElementById('customModal').classList.add('show');
+}
+
+function closeModal() {
+    document.getElementById('customModal').classList.remove('show');
+}
+
 let selectedBank ;
 let selectedRekening;
 let uploadedFile;
@@ -211,13 +239,13 @@ function handleFileChange(input) {
     const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
 
     if (!allowedTypes.includes(file.type)) {
-        alert('Format file tidak didukung. Gunakan JPG, PNG, atau PDF.');
+        showModal('Format file tidak didukung. Gunakan JPG, PNG, atau PDF.');
         input.value = '';
         return;
     }
 
     if (file.size > maxSize) {
-        alert('Ukuran file terlalu besar. Maksimal 5MB.');
+        showModal('Ukuran file terlalu besar. Maksimal 5MB.');
         input.value = '';
         return;
     }
@@ -235,21 +263,17 @@ function handleFileChange(input) {
 
 function submitPembayaran() {
     if (!selectedBank) {
-        alert('Silakan pilih bank tujuan transfer terlebih dahulu.');
+        showModal('Silakan pilih bank tujuan transfer terlebih dahulu.');
         return;
     }
     if (!uploadedFile) {
-        alert('Silakan upload bukti transfer terlebih dahulu.');
+        showModal('Silakan upload bukti transfer terlebih dahulu.');
         return;
     }
 
     const catatan = document.getElementById('CatatanTambahan').value;
 
-    console.log('Bank dipilih:', selectedBank);
-    console.log('File bukti transfer:', uploadedFile.name);
-    console.log('Catatan tambahan:', catatan);
-
-    alert('Bukti pembayaran berhasil dikirim! Admin akan memverifikasi paling lambat 1x24 jam.');
+    showModal('Bukti pembayaran berhasil dikirim! Admin akan memverifikasi paling lambat 1x24 jam.', 'bi-check-circle-fill', true);
 }
 </script>
 </body>
