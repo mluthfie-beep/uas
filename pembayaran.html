@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>pembayaran</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="pembayaran.css">
+    <link rel="stylesheet" href="shared-navbar.css">
+</head>
+
+<body>
+    <!-- ============ NAVBAR (seragam dengan index.html) ============ -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow" id="mainNavbar">
+        <div class="container">
+            <button class="btn btn-sidebar-toggle me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-label="Buka menu">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-hexagon-fill text-emerald"></i> Amikom Mini Soccer
+            </a>
+
+            <div class="d-flex align-items-center gap-2 ms-auto">
+                <a class="nav-link px-2" href="#"><i class="bi bi-bell-fill text-warning"></i></a>
+                <div class="dropdown">
+                    <button class="btn btn-user-menu dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="avatar-circle avatar-sm">BS</span>
+                        <span class="d-none d-md-inline ms-2">Budi Santoso</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="profil.html"><i class="bi bi-person-fill me-2"></i>Profil &amp; Riwayat</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button type="button" class="dropdown-item"><i class="bi bi-box-arrow-right me-2"></i>Keluar</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============ OFFCANVAS SIDEBAR (seragam dengan index.html) ============ -->
+    <div class="offcanvas offcanvas-start sidebar-menu" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+        <div class="offcanvas-header">
+            <a href="index.html" class="offcanvas-title fw-bold" id="sidebarMenuLabel">
+                <i class="bi bi-hexagon-fill text-emerald me-1"></i>Amikom Soccer
+            </a>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column">
+
+            <span class="sidebar-heading">Menu</span>
+            <ul class="sidebar-nav">
+                <li><a href="beranda.html"><i class="bi bi-house-door-fill"></i>Beranda</a></li>
+                <li><a href="jadwal.html"><i class="bi bi-calendar2-week-fill"></i>Jadwal Lapangan</a></li>
+                <li><a href="pembayaran.html" class="active"><i class="bi bi-credit-card-fill"></i>Pembayaran</a></li>
+            </ul>
+
+            <span class="sidebar-heading">Akun</span>
+            <ul class="sidebar-nav">
+                <li><a href="profil.html"><i class="bi bi-person-fill"></i>Profil &amp; Riwayat</a></li>
+            </ul>
+
+            <div class="sidebar-profile mt-auto">
+                <div class="avatar-circle">BS</div>
+                <div class="flex-grow-1">
+                    <div class="fw-semibold small text-white">Budi Santoso</div>
+                    <div class="text-muted-soft small">Pelanggan</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="app-layout">
+
+    <main class="main-content">
+        <div class="content-center">
+            
+            <section class="card-dark">
+    <h2>Pilih Bank Tujuan Transfer</h2>
+    <div class="row g-3" id="bankOptions">
+        <div class="col-4">
+            <div class="bank-option" onclick="pilihBank(this, 'BCA', 'XXXXXXXX')">BCA</div>
+        </div>
+        <div class="col-4">
+            <div class="bank-option" onclick="pilihBank(this, 'Mandiri', 'XXXXXXXX')">Mandiri</div>
+        </div>
+        <div class="col-4">
+            <div class="bank-option" onclick="pilihBank(this, 'BRI', 'XXXXXXXX')">BRI</div>
+        </div>
+    </div>
+
+    <div id="rekeningBox" class="rekening-box mt-3" style="display:none;">
+        <small class="text-uppercase" style="color:#64748b; letter-spacing:0.05em; font-size:0.7rem;">
+            Nomor Rekening Tujuan
+        </small>
+        <div class="d-flex justify-content-between align-items-center mt-1">
+            <span id="rekNum" style="font-size:1.2rem; font-weight:700; color:#fff;"></span>
+            <button type="button" class="btn btn-sm btn-outline-success" onclick="salinRekening()">
+                📋 Salin
+            </button>
+        </div>
+        <small style="color:#94a3b8;">a.n <span id="rekAtasNama">Amikom Mini Soccer</span></small>
+    </div>
+</section>
+
+ <section class="card-dark">
+            <h2>Upload Bukti Transfer</h2>
+            <div class="upload-box" id="uploadBox" onclick="klikUpload()">
+            <i class="bi bi-cloud-upload fs-3" id="uploadIcon"></i>
+            <p class="mb-0 mt-2" id="uploadText">Klik untuk upload foto bukti transfer</p>
+            <small id="uploadSub">Format: JPG, PNG, PDF - Maks 5MB</small>
+        </div>
+        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" hidden onchange="handleFileChange(this)">
+            <div class="warn-note mt-3">
+                <span>Pastikan foto bukti transfer jelas dan terbaca. Admin akan memverifikasi paling lambat 1×24 jam. Booking belum aktif sebelum pembayaran diverifikasi.</span>
+            </div>
+</section>
+
+            <section class="card-dark">
+                <h2>Catatan Tambahan (Opsional)</h2>
+                <textarea class="form-control form-control-dark" id="CatatanTambahan" rows="4" placeholder="Masukkan catatan tambahan jika ada..."></textarea>
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                <a href="#" class="btn btn-dark"><i class="bi bi-arrow-left me-2"></i>Kembali</a>
+                <button type="button" class="btn btn-success" onclick="submitPembayaran()">Kirim Bukti Pembayaran</button>
+            </div>
+            </section>
+        </div>
+            
+        </main>
+
+        <aside class="summary-panel">
+
+    <div class="card-dark">
+        <h2>Ringkasan Pesanan</h2>
+
+        <div class="summary-row">
+            <span class="label">ID Booking</span>
+            <span class="value">BR-0413</span>
+        </div>
+        <div class="summary-row">
+            <span class="label">Nama</span>
+            <span class="value">Budi Santoso</span>
+        </div>
+        <div class="summary-row">
+            <span class="label">Lapangan</span>
+            <span class="value">Lapangan A</span>
+        </div>
+        <div class="summary-row">
+            <span class="label">Tanggal</span>
+            <span class="value">23 Juni 2026</span>
+        </div>
+        <div class="summary-row">
+            <span class="label">Waktu</span>
+            <span class="value">10.00 - 12.00</span>
+        </div>
+        <div class="summary-row">
+            <span class="label">Durasi</span>
+            <span class="value">2 Jam</span>
+        </div>
+        <div class="summary-row">
+            <span class="label">Harga/Jam</span>
+            <span class="value">Rp 80.000</span>
+        </div>
+        <div class="summary-row">
+            <span class="label">Status</span>
+            <span class="badge-status">Menunggu Bayar</span>
+        </div>
+
+        <div class="summary-total">
+            <span class="label">Total</span>
+            <span class="value">Rp 160.000</span>
+        </div>
+    </div>
+
+    <div class="card-dark">
+        <h2>Langkah Pembayaran</h2>
+        <ul class="steps-list">
+            <li>
+                <div class="step-num">1</div>
+                <span>Transfer ke rekening yang tertera sesuai jumlah total.</span>
+            </li>
+            <li>
+                <div class="step-num">2</div>
+                <span>Upload foto/screenshot bukti transfer yang jelas.</span>
+            </li>
+            <li>
+                <div class="step-num">3</div>
+                <span>Admin memverifikasi & booking kamu aktif.</span>
+            </li>
+        </ul>
+    </div>
+
+</aside>
+      
+</div>
+
+<div class="modal-overlay" id="customModal">
+    <div class="modal-box">
+        <i class="bi modal-icon" id="modalIcon"></i>
+        <p id="modalMessage" class="mb-0"></p>
+        <button type="button" class="btn btn-success w-100 mt-3" onclick="closeModal()">OK</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+function showModal(message, iconClass = 'bi-exclamation-triangle-fill', isSuccess = false) {
+    document.getElementById('modalMessage').textContent = message;
+    const icon = document.getElementById('modalIcon');
+    icon.className = 'bi modal-icon ' + iconClass + (isSuccess ? ' success' : '');
+    document.getElementById('customModal').classList.add('show');
+}
+
+function closeModal() {
+    document.getElementById('customModal').classList.remove('show');
+}
+
+let selectedBank ;
+let selectedRekening;
+let uploadedFile;
+
+function pilihBank(el, bankName, nomorRekening) {
+    document.querySelectorAll('.bank-option').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+
+    selectedBank = bankName;
+    selectedRekening = nomorRekening;
+
+    const rekBox = document.getElementById('rekeningBox');
+    rekBox.style.display = 'block';
+    document.getElementById('rekNum').textContent = nomorRekening;
+}
+
+function salinRekening() {
+    if (!selectedRekening) return;
+
+    navigator.clipboard.writeText(selectedRekening.replace(/\s/g, '')).catch(() => {});
+
+    const btn = event.target;
+    const originalText = btn.textContent;
+    btn.textContent = '✓ Tersalin';
+    setTimeout(() => {
+        btn.textContent = originalText;
+    }, 1500);
+}
+
+function klikUpload() {
+    document.getElementById('fileInput').click();
+}
+
+function handleFileChange(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+
+    if (!allowedTypes.includes(file.type)) {
+        showModal('Format file tidak didukung. Gunakan JPG, PNG, atau PDF.');
+        input.value = '';
+        return;
+    }
+
+    if (file.size > maxSize) {
+        showModal('Ukuran file terlalu besar. Maksimal 5MB.');
+        input.value = '';
+        return;
+    }
+
+    uploadedFile = file;
+
+    const zone = document.getElementById('uploadBox');
+    zone.style.borderColor = '#4ade80';
+    zone.style.color = '#4ade80';
+
+    document.getElementById('uploadIcon').className = 'bi bi-check-circle-fill fs-3';
+    document.getElementById('uploadText').textContent = `${file.name} berhasil diunggah`;
+    document.getElementById('uploadSub').textContent = 'Klik untuk ganti file';
+}
+
+function submitPembayaran() {
+    if (!selectedBank) {
+        showModal('Silakan pilih bank tujuan transfer terlebih dahulu.');
+        return;
+    }
+    if (!uploadedFile) {
+        showModal('Silakan upload bukti transfer terlebih dahulu.');
+        return;
+    }
+
+    const catatan = document.getElementById('CatatanTambahan').value;
+
+    showModal('Bukti pembayaran berhasil dikirim! Admin akan memverifikasi paling lambat 1x24 jam.', 'bi-check-circle-fill', true);
+}
+</script>
+</body>
