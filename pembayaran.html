@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -199,7 +199,7 @@
     <div class="modal-box">
         <i class="bi modal-icon" id="modalIcon"></i>
         <p id="modalMessage" class="mb-0"></p>
-        <button type="button" class="btn btn-success w-100 mt-3" onclick="closeModal()">OK</button>
+        <a id="modalButton" type="button" class="btn btn-success w-100 mt-3" onclick="closeModal()">OK</a>
     </div>
 </div>
 
@@ -210,6 +210,7 @@ function showModal(message, iconClass = 'bi-exclamation-triangle-fill', isSucces
     document.getElementById('modalMessage').textContent = message;
     const icon = document.getElementById('modalIcon');
     icon.className = 'bi modal-icon ' + iconClass + (isSuccess ? ' success' : '');
+    document.getElementById('modalButton').href = isSuccess ? 'profil.html' : '#';
     document.getElementById('customModal').classList.add('show');
 }
 
