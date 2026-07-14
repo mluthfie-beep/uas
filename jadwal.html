@@ -242,9 +242,9 @@
             </div>
         </div>
 
-        <a href="pembayaran.html" class="btn btn-emerald w-100 py-2 mb-4 d-flex justify-content-center align-items-center gap-2" id="btn-submit">
+       <button type="button" class="btn btn-emerald w-100 py-2 mb-4 d-flex justify-content-center align-items-center gap-2" id="btn-submit">
             Lanjut ke Pembayaran <i class="bi bi-arrow-right"></i>
-        </a>
+        </button>
 
         <div class="tips-box p-3 border border-panel rounded-3 d-flex gap-2 align-items-start mt-auto">
             <i class="bi bi-lightbulb-fill text-warning mt-1"></i>
@@ -325,6 +325,44 @@
                 refreshRingkasan();
             });
         });
+
+        document.getElementById('btn-submit').addEventListener('click', function() {
+    const selected = Array.from(document.querySelectorAll('.slot.anda[data-lap]'));
+
+    if (selected.length === 0) {
+        alert('Pilih dulu minimal 1 slot jam di jadwal.');
+        return;
+    }
+
+    const namaInput = document.querySelector('input[placeholder="Masukkan nama..."]').value;
+    const teleponInput = document.querySelector('input[placeholder="08..."]').value;
+
+    if (!namaInput || !teleponInput) {
+        alert('Lengkapi nama dan nomor telepon dulu.');
+        return;
+    }
+
+    const harga = parseInt(inputLapangan.value) || 0;
+    const namaLapangan = inputLapangan.options[inputLapangan.selectedIndex].getAttribute('data-nama');
+    const durasi = selected.length;
+    const total = harga * durasi;
+    const jamList = selected.map(s => s.getAttribute('data-jam')).sort();
+
+    const bookingData = {
+        idBooking: 'BR-' + Math.floor(1000 + Math.random() * 9000),
+        nama: namaInput,
+        telepon: teleponInput,
+        lapangan: namaLapangan,
+        tanggal: 'Senin, 23 Juni 2030',
+        jamMulai: jamList[0],
+        durasi: durasi,
+        hargaPerJam: harga,
+        total: total
+    };
+
+    localStorage.setItem('bookingData', JSON.stringify(bookingData));
+    window.location.href = 'pembayaran.html';
+});
     </script>
 </body>
 </html>
