@@ -148,8 +148,8 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
                 <a class="nav-link px-2" href="#"><i class="bi bi-bell-fill text-warning"></i></a>
                 <div class="dropdown">
                     <button class="btn btn-user-menu dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="avatar-circle avatar-sm">BS</span>
-                        <span class="d-none d-md-inline ms-2">Budi Santoso</span>
+                        <span class="avatar-circle avatar-sm" id="navAvatar">BS</span>
+                        <span class="d-none d-md-inline ms-2" id="navUserName">Budi Santoso</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
                         <li><a class="dropdown-item" href="profil.html"><i class="bi bi-person-fill me-2"></i>Profil &amp; Riwayat</a></li>
@@ -184,9 +184,9 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
             </ul>
 
             <div class="sidebar-profile mt-auto">
-                <div class="avatar-circle">BS</div>
+                <div class="avatar-circle" id="sidebarAvatar">BS</div>
                 <div class="flex-grow-1">
-                    <div class="fw-semibold small text-white">Budi Santoso</div>
+                    <div class="fw-semibold small text-white" id="sidebarUserName">Budi Santoso</div>
                     <div class="text-muted-soft small">Pelanggan</div>
                 </div>
             </div>
@@ -209,17 +209,17 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
       <div>
         <div class="profile-card">
           <div class="pc-cover">
-            <div class="pc-avatar">BS</div>
+            <div class="pc-avatar" id="pcAvatar">BS</div>
           </div>
           <div class="pc-body">
-            <div class="pc-name">Budi Santoso</div>
-            <div class="pc-email">budi.santoso@email.com</div>
+            <div class="pc-name" id="pcName">Budi Santoso</div>
+            <div class="pc-email" id="pcEmail">budi.santoso@email.com</div>
             <div class="pc-stats">
               <div class="pcs"><div class="pcs-val">12</div><div class="pcs-lbl">Total Booking</div></div>
               <div class="pcs"><div class="pcs-val" style="color:var(--amber)">Rp 1,4jt</div><div class="pcs-lbl">Total Bayar</div></div>
             </div>
             <div class="divider"></div>
-            <div class="detail-row"><span class="k">No. Telepon</span><span class="v">0812-3456-7890</span></div>
+            <div class="detail-row"><span class="k">No. Telepon</span><span class="v" id="pcPhone">0812-3456-7890</span></div>
             <div class="detail-row"><span class="k">Bergabung</span><span class="v">Januari 2026</span></div>
             <div class="detail-row"><span class="k">Peran</span><span class="v"><span class="badge blue">Pelanggan</span></span></div>
             <div class="detail-row"><span class="k">Lap. Favorit</span><span class="v">Lapangan A</span></div>
@@ -227,10 +227,11 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
             <div class="divider"></div>
             <button class="btn btn-ghost" style="width:100%;margin-bottom:8px" onclick="toggleEdit()">✏️ Edit Profil</button>
             <div class="edit-section" id="edit-section">
-              <div class="field-group"><label class="field-label">Nama</label><input class="field-input" value="Budi Santoso"></div>
-              <div class="field-group"><label class="field-label">Email</label><input class="field-input" value="budi.santoso@email.com"></div>
-              <div class="field-group"><label class="field-label">No. Telepon</label><input class="field-input" value="0812-3456-7890"></div>
-              <button class="btn btn-primary" style="width:100%" onclick="toggleEdit()">Simpan Perubahan</button>
+              <div class="field-group"><label class="field-label">Nama</label><input class="field-input" id="editNama" value="Budi Santoso"></div>
+              <div class="field-group"><label class="field-label">Email</label><input class="field-input" id="editEmail" type="email" value="budi.santoso@email.com"></div>
+              <div class="field-group"><label class="field-label">No. Telepon</label><input class="field-input" id="editTelepon" value="0812-3456-7890"></div>
+              <div class="field-group" id="editErrorMsg" style="display:none;color:var(--danger);font-size:11.5px;margin-top:-6px"></div>
+              <button class="btn btn-primary" style="width:100%" onclick="simpanProfil()">Simpan Perubahan</button>
             </div>
           </div>
         </div>
@@ -256,14 +257,16 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
         <!-- TAB: Riwayat -->
         <div class="tab-panel active" id="tab-riwayat">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <span style="font-size:13px;font-weight:700">12 Booking Tercatat</span>
-            <select class="field-input" style="width:auto;font-size:12px;padding:7px 12px">
-              <option>Semua Status</option>
-              <option>Dikonfirmasi</option>
-              <option>Menunggu</option>
-              <option>Dibatalkan</option>
+            <span style="font-size:13px;font-weight:700" id="riwayat-count">12 Booking Tercatat</span>
+            <select class="field-input" style="width:auto;font-size:12px;padding:7px 12px" id="filterStatus" onchange="filterRiwayat()">
+              <option value="semua">Semua Status</option>
+              <option value="Dikonfirmasi">Dikonfirmasi</option>
+              <option value="Menunggu">Menunggu</option>
+              <option value="Dibatalkan">Dibatalkan</option>
             </select>
           </div>
+
+          <div id="riwayat-list">
 
           <div class="bh-card">
             <div class="bh-icon a">🏟️</div>
@@ -323,6 +326,8 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
               <div class="bh-price">Rp 240.000</div>
               <span class="badge green" style="font-size:10px;margin-top:4px;display:inline-flex"><span class="badge-dot"></span>Dikonfirmasi</span>
             </div>
+          </div>
+
           </div>
 
           <div style="text-align:center;padding:16px 0 4px">
@@ -433,7 +438,187 @@ function switchTab(name, el) {
 function toggleEdit() {
   const s = document.getElementById('edit-section');
   s.classList.toggle('show');
+  const err = document.getElementById('editErrorMsg');
+  if (err) err.style.display = 'none';
 }
+
+function ambilInisial(nama) {
+  const kata = nama.trim().split(/\s+/);
+  const inisial = kata.slice(0, 2).map(k => k[0] || '').join('');
+  return inisial.toUpperCase() || '?';
+}
+
+function tampilkanErrorEdit(pesan) {
+  const err = document.getElementById('editErrorMsg');
+  if (err) {
+    err.textContent = pesan;
+    err.style.display = 'block';
+  }
+}
+
+// --- Simpan perubahan profil (Nama, Email, No. Telepon) ---
+function simpanProfil() {
+  const nama = document.getElementById('editNama').value.trim();
+  const email = document.getElementById('editEmail').value.trim();
+  const telepon = document.getElementById('editTelepon').value.trim();
+
+  if (!nama) {
+    tampilkanErrorEdit('Nama tidak boleh kosong.');
+    return;
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    tampilkanErrorEdit('Format email tidak valid.');
+    return;
+  }
+  const teleponRegex = /^[0-9+\-\s]{8,15}$/;
+  if (!teleponRegex.test(telepon)) {
+    tampilkanErrorEdit('Nomor telepon tidak valid.');
+    return;
+  }
+
+  const inisial = ambilInisial(nama);
+
+  // Update tampilan kartu profil
+  document.getElementById('pcName').textContent = nama;
+  document.getElementById('pcEmail').textContent = email;
+  document.getElementById('pcPhone').textContent = telepon;
+  document.getElementById('pcAvatar').textContent = inisial;
+
+  // Update navbar & sidebar biar konsisten di seluruh halaman
+  const navName = document.getElementById('navUserName');
+  const navAvatar = document.getElementById('navAvatar');
+  const sbName = document.getElementById('sidebarUserName');
+  const sbAvatar = document.getElementById('sidebarAvatar');
+  if (navName) navName.textContent = nama;
+  if (navAvatar) navAvatar.textContent = inisial;
+  if (sbName) sbName.textContent = nama;
+  if (sbAvatar) sbAvatar.textContent = inisial;
+
+  // Simpan ke localStorage supaya tidak hilang saat reload / pindah halaman
+  localStorage.setItem('profilData', JSON.stringify({ nama, email, telepon }));
+
+  const err = document.getElementById('editErrorMsg');
+  if (err) err.style.display = 'none';
+
+  toggleEdit();
+}
+
+// --- Muat data profil tersimpan (jika pernah diedit sebelumnya) ---
+function muatProfilTersimpan() {
+  const raw = localStorage.getItem('profilData');
+  if (!raw) return;
+
+  try {
+    const data = JSON.parse(raw);
+    const inisial = ambilInisial(data.nama);
+
+    document.getElementById('pcName').textContent = data.nama;
+    document.getElementById('pcEmail').textContent = data.email;
+    document.getElementById('pcPhone').textContent = data.telepon;
+    document.getElementById('pcAvatar').textContent = inisial;
+    document.getElementById('editNama').value = data.nama;
+    document.getElementById('editEmail').value = data.email;
+    document.getElementById('editTelepon').value = data.telepon;
+
+    const navName = document.getElementById('navUserName');
+    const navAvatar = document.getElementById('navAvatar');
+    const sbName = document.getElementById('sidebarUserName');
+    const sbAvatar = document.getElementById('sidebarAvatar');
+    if (navName) navName.textContent = data.nama;
+    if (navAvatar) navAvatar.textContent = inisial;
+    if (sbName) sbName.textContent = data.nama;
+    if (sbAvatar) sbAvatar.textContent = inisial;
+  } catch (e) {
+    // abaikan data rusak
+  }
+}
+
+muatProfilTersimpan();
+
+function formatRupiah(angka) {
+  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+}
+
+function jamSelesai(jamMulai, durasi) {
+  const [h, m] = jamMulai.split(':').map(Number);
+  const selesai = (h + Number(durasi)) % 24;
+  return String(selesai).padStart(2, '0') + '.' + String(m).padStart(2, '0');
+}
+
+// Peta status booking -> warna badge & ikon kartu
+const statusMap = {
+  'Menunggu Verifikasi': { badge: 'amber', icon: 'a', label: 'Menunggu' },
+  'Menunggu Bayar':      { badge: 'amber', icon: 'a', label: 'Menunggu' },
+  'Dikonfirmasi':        { badge: 'green', icon: 'g', label: 'Dikonfirmasi' },
+  'Dibatalkan':          { badge: 'red',   icon: 'r', label: 'Dibatalkan' }
+};
+
+// --- Render booking dari localStorage (hasil pemesanan di jadwal.html -> pembayaran.html) ---
+function muatRiwayatBooking() {
+  const riwayat = JSON.parse(localStorage.getItem('riwayatBooking') || '[]');
+  if (!riwayat.length) return;
+
+  const list = document.getElementById('riwayat-list');
+  const countEl = document.getElementById('riwayat-count');
+
+  riwayat.forEach(item => {
+    const st = statusMap[item.status] || statusMap['Menunggu Verifikasi'];
+
+    const jamMulaiFmt = item.jamMulai ? item.jamMulai.replace(':', '.') : '';
+    const waktuTampil = item.waktuTampil || (jamMulaiFmt && item.durasi
+      ? jamMulaiFmt + '–' + jamSelesai(item.jamMulai, item.durasi)
+      : '');
+
+    const totalTampil = typeof item.total === 'number' ? formatRupiah(item.total) : item.total;
+
+    const card = document.createElement('div');
+    card.className = 'bh-card';
+    card.innerHTML = `
+      <div class="bh-icon ${st.icon}">🏟️</div>
+      <div class="bh-main">
+        <div class="bh-title">${item.lapangan} — ${item.durasi} Jam</div>
+        <div class="bh-sub">${item.tanggal} · ${waktuTampil} · <span style="color:var(--green);font-weight:600">#${item.idBooking}</span></div>
+      </div>
+      <div class="bh-right">
+        <div class="bh-price">${totalTampil}</div>
+        <span class="badge ${st.badge}" style="font-size:10px;margin-top:4px;display:inline-flex"><span class="badge-dot"></span>${st.label}</span>
+      </div>
+    `;
+    list.insertBefore(card, list.firstChild); // booking terbaru selalu di paling atas
+  });
+
+  // Perbarui jumlah booking tercatat
+  if (countEl) {
+    const totalSemua = list.querySelectorAll('.bh-card').length;
+    countEl.textContent = totalSemua + ' Booking Tercatat';
+  }
+}
+
+// --- Filter riwayat booking berdasarkan status yang dipilih ---
+function filterRiwayat() {
+  const filterEl = document.getElementById('filterStatus');
+  const val = filterEl ? filterEl.value : 'semua';
+  const cards = document.querySelectorAll('#riwayat-list .bh-card');
+  const countEl = document.getElementById('riwayat-count');
+  let tampil = 0;
+
+  cards.forEach(card => {
+    const badge = card.querySelector('.badge');
+    const statusText = badge ? badge.textContent.trim() : '';
+    const cocok = (val === 'semua') || (statusText === val);
+    card.style.display = cocok ? 'flex' : 'none';
+    if (cocok) tampil++;
+  });
+
+  if (countEl) {
+    countEl.textContent = val === 'semua'
+      ? tampil + ' Booking Tercatat'
+      : tampil + ' Booking · ' + val;
+  }
+}
+
+muatRiwayatBooking();
 
 // Generate activity grid
 const actGrid = document.getElementById('act-grid');

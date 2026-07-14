@@ -78,8 +78,9 @@
     <main class="flex-grow-1 p-4 overflow-auto hide-scroll main-content">
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-4 gap-3">
             <h3 class="fw-bold text-white m-0">Jadwal Lapangan</h3>
-            <div class="bg-panel px-3 py-2 rounded border border-panel text-secondary" style="font-size: 14px;">
-                <i class="bi bi-calendar-event me-2"></i> Senin, 23 Juni 2030
+            <div class="bg-panel px-3 py-2 rounded border border-panel text-secondary position-relative" style="font-size: 14px; cursor: pointer;" id="tanggalWrapper">
+                <i class="bi bi-calendar-event me-2"></i><span id="tanggalDisplay">Senin, 23 Juni 2030</span>
+                <input type="date" id="tanggalInput" class="position-absolute top-0 start-0 w-100 h-100" style="opacity: 0; cursor: pointer; border: 0;">
             </div>
         </div>
         
@@ -226,7 +227,7 @@
                 </div>
                 <div class="d-flex justify-content-between mb-2" style="font-size: 14px;">
                     <span class="text-secondary">Tanggal</span>
-                    <strong class="text-white">Senin, 23 Juni 2030</strong>
+                    <strong class="text-white" id="out-tanggal">Senin, 23 Juni 2030</strong>
                 </div>
                 <div class="d-flex justify-content-between mb-3" style="font-size: 14px;">
                     <span class="text-secondary">Durasi</span>
@@ -264,11 +265,49 @@
         const outDurasi = document.getElementById('out-durasi');
         const outJam = document.getElementById('out-jam');
         const outTotal = document.getElementById('out-total');
+        const outTanggal = document.getElementById('out-tanggal');
         const slots = document.querySelectorAll('.slot[data-lap]');
 
         function formatRupiah(angka) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
         }
+
+        // --- 1b. DATE PICKER: pilih tanggal, tanggal kemarin & sebelumnya terkunci ---
+        const tanggalInput = document.getElementById('tanggalInput');
+        const tanggalDisplay = document.getElementById('tanggalDisplay');
+        let tanggalTerpilih = tanggalDisplay.textContent.trim();
+
+        const hariNames = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu'];
+        const bulanNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+        function formatTanggalIndo(dateStr) {
+            const [y, m, d] = dateStr.split('-').map(Number);
+            const dateObj = new Date(y, m - 1, d);
+            return hariNames[dateObj.getDay()] + ', ' + d + ' ' + bulanNames[m - 1] + ' ' + y;
+        }
+
+        function toDateInputValue(dateObj) {
+            const y = dateObj.getFullYear();
+            const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const d = String(dateObj.getDate()).padStart(2, '0');
+            return y + '-' + m + '-' + d;
+        }
+
+        // Kunci tanggal kemarin dan sebelumnya — minimal hari ini
+        const hariIni = new Date();
+        hariIni.setHours(0, 0, 0, 0);
+        tanggalInput.min = toDateInputValue(hariIni);
+
+        // Nilai default input mengikuti tanggal yang tampil di panel (jika sudah lewat, pakai hari ini)
+        const defaultDate = new Date(2030, 5, 23); // 23 Juni 2030, sesuai teks bawaan
+        tanggalInput.value = defaultDate < hariIni ? toDateInputValue(hariIni) : toDateInputValue(defaultDate);
+
+        tanggalInput.addEventListener('change', function () {
+            if (!this.value) return;
+            tanggalTerpilih = formatTanggalIndo(this.value);
+            tanggalDisplay.textContent = tanggalTerpilih;
+            if (outTanggal) outTanggal.textContent = tanggalTerpilih;
+        });
 
         // --- 2. HITUNG ULANG RINGKASAN BERDASARKAN SLOT YANG DIPILIH (class "anda") ---
         function refreshRingkasan() {
@@ -353,7 +392,7 @@
         nama: namaInput,
         telepon: teleponInput,
         lapangan: namaLapangan,
-        tanggal: 'Senin, 23 Juni 2030',
+        tanggal: tanggalTerpilih,
         jamMulai: jamList[0],
         durasi: durasi,
         hargaPerJam: harga,

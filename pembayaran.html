@@ -207,6 +207,45 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 
+function formatRupiah(angka) {
+    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+}
+
+function jamSelesai(jamMulai, durasi) {
+    const [h, m] = jamMulai.split(':').map(Number);
+    const selesai = (h + Number(durasi)) % 24;
+    return String(selesai).padStart(2, '0') + '.' + String(m).padStart(2, '0');
+}
+
+// --- Muat data booking dari jadwal.html (localStorage) ke Ringkasan Pesanan ---
+let currentBooking = null;
+
+function muatRingkasanPesanan() {
+    const raw = localStorage.getItem('bookingData');
+    if (!raw) return; // tidak ada data booking baru, biarkan nilai default di HTML
+
+    try {
+        currentBooking = JSON.parse(raw);
+    } catch (e) {
+        return;
+    }
+
+    const jamMulaiFmt = currentBooking.jamMulai.replace(':', '.');
+    const jamSelesaiFmt = jamSelesai(currentBooking.jamMulai, currentBooking.durasi);
+
+    document.getElementById('sumIdBooking').textContent = currentBooking.idBooking;
+    document.getElementById('sumNama').textContent = currentBooking.nama;
+    document.getElementById('sumLapangan').textContent = currentBooking.lapangan;
+    document.getElementById('sumTanggal').textContent = currentBooking.tanggal;
+    document.getElementById('sumWaktu').textContent = jamMulaiFmt + ' - ' + jamSelesaiFmt;
+    document.getElementById('sumDurasi').textContent = currentBooking.durasi + ' Jam';
+    document.getElementById('sumHarga').textContent = formatRupiah(currentBooking.hargaPerJam);
+    document.getElementById('sumTotal').textContent = formatRupiah(currentBooking.total);
+    document.getElementById('sumStatus').textContent = 'Menunggu Bayar';
+}
+
+muatRingkasanPesanan();
+
 function showModal(message, iconClass = 'bi-exclamation-triangle-fill', isSuccess = false) {
     document.getElementById('modalMessage').textContent = message;
     const icon = document.getElementById('modalIcon');
@@ -293,6 +332,41 @@ function submitPembayaran() {
     }
 
     const catatan = document.getElementById('CatatanTambahan').value;
+
+    // --- Simpan booking ini ke riwayat (localStorage) agar muncul di profil.html ---
+    const riwayat = JSON.parse(localStorage.getItem('riwayatBooking') || '[]');
+
+    const entriBaru = currentBooking ? {
+        idBooking: currentBooking.idBooking,
+        nama: currentBooking.nama,
+        lapangan: currentBooking.lapangan,
+        tanggal: currentBooking.tanggal,
+        jamMulai: currentBooking.jamMulai,
+        durasi: currentBooking.durasi,
+        hargaPerJam: currentBooking.hargaPerJam,
+        total: currentBooking.total,
+        bank: selectedBank,
+        rekening: selectedRekening,
+        catatan: catatan,
+        status: 'Menunggu Verifikasi'
+    } : {
+        idBooking: document.getElementById('sumIdBooking').textContent,
+        nama: document.getElementById('sumNama').textContent,
+        lapangan: document.getElementById('sumLapangan').textContent,
+        tanggal: document.getElementById('sumTanggal').textContent,
+        waktuTampil: document.getElementById('sumWaktu').textContent,
+        durasi: parseInt(document.getElementById('sumDurasi').textContent) || 0,
+        hargaPerJam: 0,
+        total: document.getElementById('sumTotal').textContent,
+        bank: selectedBank,
+        rekening: selectedRekening,
+        catatan: catatan,
+        status: 'Menunggu Verifikasi'
+    };
+
+    riwayat.unshift(entriBaru); // booking terbaru ditaruh paling atas
+    localStorage.setItem('riwayatBooking', JSON.stringify(riwayat));
+    localStorage.removeItem('bookingData'); // bersihkan data sementara setelah tersimpan ke riwayat
 
     showModal('Bukti pembayaran berhasil dikirim! Admin akan memverifikasi paling lambat 1x24 jam.', 'bi-check-circle-fill', true);
 }
