@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Login</title>
+    <link rel="stylesheet" href="login.css">
+     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Selamat Datang</h2>
+        <form action="beranda.html" method="GET">
+            <div class="form-group">
+                <label for="username">Username atau Email</label>
+                <input type="text" id="username" name="username" required placeholder="Masukkan Username atau Email Anda">
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Masukkan password Anda">
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+            <button type="submit" class="btn-login">Masuk</button>
+        </form>
+        <div class="footer-text">
+           <p>Belum punya akun?</p><a href="#">Daftar di sini</a>
+        </div>
+    </div>
+
+</body>
+</html>
