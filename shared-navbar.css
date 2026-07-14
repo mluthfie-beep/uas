@@ -1,0 +1,131 @@
+/* ============================================================
+   SHARED NAVBAR + OFFCANVAS SIDEBAR
+   Dipakai bersama oleh jadwal.html, pembayaran.html, profil.html
+   supaya konsisten dengan struktur navigasi di index.html
+   ============================================================ */
+
+:root{
+  --amn-navy:#0D1B2A;
+  --amn-navy-mid:#162435;
+  --amn-navy-light:#1E3148;
+  --amn-green:#00E676;
+  --amn-green-dim:#00C864;
+  --amn-green-glow:rgba(0,230,118,0.13);
+  --amn-muted:#8FA5BE;
+  --amn-border:rgba(255,255,255,0.08);
+}
+
+body{ padding-top: 64px; }
+
+/* ---------- Navbar atas ---------- */
+#mainNavbar.navbar{
+  background:var(--amn-navy-mid);
+  border-bottom:1px solid var(--amn-border);
+  padding-top:.6rem;
+  padding-bottom:.6rem;
+}
+#mainNavbar .navbar-brand{
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+}
+#mainNavbar .text-emerald{ color:var(--amn-green) !important; }
+
+#mainNavbar .btn-sidebar-toggle{
+  background:transparent;
+  border:1px solid var(--amn-border);
+  color:#fff;
+  border-radius:8px;
+  padding:.35rem .6rem;
+}
+#mainNavbar .btn-sidebar-toggle:hover{ background:var(--amn-navy-light); }
+
+#mainNavbar .btn-user-menu{
+  background:var(--amn-navy-light);
+  border:1px solid var(--amn-border);
+  color:#fff;
+  border-radius:10px;
+  padding:.3rem .7rem .3rem .3rem;
+  display:flex;
+  align-items:center;
+}
+#mainNavbar .btn-user-menu:hover{ background:#1c3450; }
+#mainNavbar .btn-user-menu::after{ margin-left:.5rem; }
+
+.avatar-circle{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,#3D5A80,#5B7FA6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;color:#fff;flex-shrink:0;
+}
+.avatar-circle.avatar-sm{ width:28px;height:28px;font-size:11px; }
+
+#mainNavbar .dropdown-menu-dark{
+  background:var(--amn-navy-mid);
+  border:1px solid var(--amn-border);
+}
+#mainNavbar .dropdown-menu-dark .dropdown-item{ color:#dbe4ee; }
+#mainNavbar .dropdown-menu-dark .dropdown-item:hover{
+  background:var(--amn-navy-light); color:#fff;
+}
+
+.text-muted-soft{ color:var(--amn-muted) !important; }
+
+/* ---------- Offcanvas sidebar ---------- */
+.sidebar-menu.offcanvas{
+  width:270px;
+  background:var(--amn-navy-mid);
+  border-right:1px solid var(--amn-border);
+  color:#fff;
+}
+.sidebar-menu .offcanvas-header{
+  border-bottom:1px solid var(--amn-border);
+}
+.sidebar-menu .offcanvas-title{
+  color:#fff; text-decoration:none;
+  display:flex; align-items:center;
+}
+
+.sidebar-heading{
+  display:block;
+  font-size:10.5px;
+  font-weight:700;
+  color:var(--amn-muted);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin:16px 4px 8px;
+}
+
+.sidebar-nav{
+  list-style:none;
+  padding:0; margin:0;
+  display:flex; flex-direction:column; gap:2px;
+}
+.sidebar-nav li a{
+  display:flex; align-items:center; gap:11px;
+  padding:9px 10px;
+  border-radius:8px;
+  font-size:13.5px; font-weight:500;
+  color:var(--amn-muted);
+  text-decoration:none;
+  border:1px solid transparent;
+  transition:all .15s;
+}
+.sidebar-nav li a i{ width:18px; text-align:center; font-size:15px; }
+.sidebar-nav li a:hover{ background:var(--amn-navy-light); color:#fff; }
+.sidebar-nav li a.active{
+  background:var(--amn-green-glow);
+  color:var(--amn-green);
+  border-color:rgba(0,230,118,0.25);
+}
+.sidebar-nav li a .dot-badge{
+  margin-left:auto; width:8px; height:8px; border-radius:50%;
+  background:#FF4C6A; display:inline-block;
+}
+
+.sidebar-profile{
+  display:flex; align-items:center; gap:10px;
+  padding-top:14px; margin-top:14px;
+  border-top:1px solid var(--amn-border);
+}
