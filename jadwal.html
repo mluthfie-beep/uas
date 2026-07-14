@@ -80,7 +80,7 @@
             <h3 class="fw-bold text-white m-0">Jadwal Lapangan</h3>
             <div class="bg-panel px-3 py-2 rounded border border-panel text-secondary position-relative" style="font-size: 14px; cursor: pointer;" id="tanggalWrapper">
                 <i class="bi bi-calendar-event me-2"></i><span id="tanggalDisplay">Senin, 23 Juni 2030</span>
-                <input type="date" id="tanggalInput" class="position-absolute top-0 start-0 w-100 h-100" style="opacity: 0; cursor: pointer; border: 0;">
+                <input type="date" id="tanggalInput" class="position-absolute top-0 start-0 w-100 h-100" style="opacity: 0; pointer-events: none; border: 0;">
             </div>
         </div>
         
@@ -307,6 +307,19 @@
             tanggalTerpilih = formatTanggalIndo(this.value);
             tanggalDisplay.textContent = tanggalTerpilih;
             if (outTanggal) outTanggal.textContent = tanggalTerpilih;
+        });
+
+        // Klik di mana saja pada panel akan membuka date picker
+        const tanggalWrapper = document.getElementById('tanggalWrapper');
+        tanggalWrapper.addEventListener('click', function () {
+            if (typeof tanggalInput.showPicker === 'function') {
+                // Chrome / Edge / browser Chromium lainnya
+                tanggalInput.showPicker();
+            } else {
+                // Fallback untuk Firefox / Safari
+                tanggalInput.focus();
+                tanggalInput.click();
+            }
         });
 
         // --- 2. HITUNG ULANG RINGKASAN BERDASARKAN SLOT YANG DIPILIH (class "anda") ---
