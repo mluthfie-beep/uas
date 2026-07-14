@@ -118,3 +118,26 @@
                 overflow: visible !important; /* Biarkan konten mengalir ke bawah */
             }
         }
+
+        /* Atur lebar laci sidebar saat meluncur keluar di semua ukuran layar */
+.sidebar-left.offcanvas {
+    width: 280px;
+    background-color: #1e293b !important; /* Tetap bg-panel */
+    border-right: 1px solid #334155 !important;
+}
+
+/* Penyesuaian layout desktop karena body-mu menggunakan flex-row */
+@media (min-width: 992px) {
+    .sidebar-right { width: 350px; }
+    
+    /* Karena body-nya flex-row, pastikan konten utama melar penuh saat sidebar ditutup */
+    .main-content {
+        flex-grow: 1;
+    }
+    
+    /* Kembalikan scroll body ke normal/auto karena layout sudah dinamis */
+    body { 
+        overflow-y: auto; 
+        height: auto; 
+    } 
+}
