@@ -11,7 +11,12 @@
   --amn-green:#00E676;
   --amn-green-dim:#00C864;
   --amn-green-glow:rgba(0,230,118,0.13);
+  --amn-amber:#FFB703;
+  --amn-amber-glow:rgba(255,183,3,0.14);
+  --amn-danger:#FF4C6A;
+  --amn-danger-glow:rgba(255,76,106,0.12);
   --amn-muted:#8FA5BE;
+  --amn-text:#EAF0F6;
   --amn-border:rgba(255,255,255,0.08);
 }
 

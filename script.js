@@ -98,3 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
+
+document.getElementById('sidebarLogoutBtn').addEventListener('click', function() {
+    window.location.href = 'index.html'; // Ganti dengan halaman tujuan
+});

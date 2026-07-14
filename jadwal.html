@@ -30,8 +30,8 @@
                 <a class="nav-link px-2" href="#"><i class="bi bi-bell-fill text-warning"></i></a>
                 <div class="dropdown">
                     <button class="btn btn-user-menu dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="avatar-circle avatar-sm">BS</span>
-                        <span class="d-none d-md-inline ms-2">Budi Santoso</span>
+                        <span class="avatar-circle avatar-sm">J</span>
+                        <span class="d-none d-md-inline ms-2">Junaedi</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
                         <li><a class="dropdown-item" href="profil.html"><i class="bi bi-person-fill me-2"></i>Profil &amp; Riwayat</a></li>
@@ -43,11 +43,11 @@
         </div>
     </nav>
 
-    <!-- ============ OFFCANVAS SIDEBAR (seragam dengan index.html) ============ -->
+    <!-- ============ OFFCANVAS SIDEBAR ============ -->
     <div class="offcanvas offcanvas-start sidebar-menu" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
         <div class="offcanvas-header">
-            <a href="index.html" class="offcanvas-title fw-bold" id="sidebarMenuLabel">
-                <i class="bx bx-football"></i> Amikom Mini Soccer
+            <a href="#beranda" class="offcanvas-title fw-bold" id="sidebarMenuLabel">
+                <i class="bx bx-football me-1"></i>Amikom Mini Soccer
             </a>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
@@ -56,9 +56,10 @@
             <span class="sidebar-heading">Menu</span>
             <ul class="sidebar-nav">
                 <li><a href="beranda.html"><i class="bi bi-house-door-fill"></i>Beranda</a></li>
-                <li><a href="jadwal.html" class="active"><i class="bi bi-calendar2-week-fill"></i>Jadwal Lapangan</a></li>
+                <li><a href="jadwal.html"><i class="bi bi-calendar2-week-fill"></i>Jadwal Lapangan</a></li>
                 <li><a href="pembayaran.html"><i class="bi bi-credit-card-fill"></i>Pembayaran</a></li>
             </ul>
+
 
             <span class="sidebar-heading">Akun</span>
             <ul class="sidebar-nav">
@@ -66,9 +67,9 @@
             </ul>
 
             <div class="sidebar-profile mt-auto">
-                <div class="avatar-circle">BS</div>
+                <div class="avatar-circle">J</div>
                 <div class="flex-grow-1">
-                    <div class="fw-semibold small text-white">Budi Santoso</div>
+                    <div class="fw-semibold small text-white">Junaedi</div>
                     <div class="text-muted-soft small">Pelanggan</div>
                 </div>
             </div>
@@ -79,7 +80,7 @@
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-4 gap-3">
             <h3 class="fw-bold text-white m-0">Jadwal Lapangan</h3>
             <div class="bg-panel px-3 py-2 rounded border border-panel text-secondary position-relative" style="font-size: 14px; cursor: pointer;" id="tanggalWrapper">
-                <i class="bi bi-calendar-event me-2"></i><span id="tanggalDisplay">Senin, 23 Juni 2030</span>
+                <i class="bi bi-calendar-event me-2"></i><span id="tanggalDisplay">Rabu, 15 Juni 2026</span>
                 <input type="date" id="tanggalInput" class="position-absolute top-0 start-0 w-100 h-100" style="opacity: 0; pointer-events: none; border: 0;">
             </div>
         </div>
@@ -227,7 +228,7 @@
                 </div>
                 <div class="d-flex justify-content-between mb-2" style="font-size: 14px;">
                     <span class="text-secondary">Tanggal</span>
-                    <strong class="text-white" id="out-tanggal">Senin, 23 Juni 2030</strong>
+                    <strong class="text-white" id="out-tanggal">Rabu, 15 Juni 2026</strong>
                 </div>
                 <div class="d-flex justify-content-between mb-3" style="font-size: 14px;">
                     <span class="text-secondary">Durasi</span>
