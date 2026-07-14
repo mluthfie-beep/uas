@@ -96,55 +96,6 @@ a { text-decoration: none; }
     color: var(--green);
 }
 
-/* --- Guest badge --- */
-.guest-badge {
-    display: inline-flex;
-    align-items: center;
-    font-size: .72rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--line-soft);
-    padding: .3rem .7rem;
-    border-radius: 999px;
-    white-space: nowrap;
-}
-
-/* --- Logged-in user menu (navbar) --- */
-.btn-user-menu {
-    display: flex;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--line-soft);
-    color: var(--text-main);
-    border-radius: 999px;
-    padding: .25rem .75rem .25rem .25rem;
-}
-
-.btn-user-menu:hover { background: var(--navy-card-hi); }
-
-.avatar-sm { width: 28px; height: 28px; font-size: .72rem; }
-
-.avatar-guest { color: var(--text-muted); font-size: 1rem; }
-
-.dropdown-menu-dark {
-    background: var(--navy-card);
-    border: 1px solid var(--line-soft);
-}
-
-.dropdown-menu-dark .dropdown-item {
-    color: var(--text-muted);
-    font-size: .88rem;
-}
-
-.dropdown-menu-dark .dropdown-item:hover,
-.dropdown-menu-dark .dropdown-item:focus {
-    background: var(--navy-card-hi);
-    color: var(--text-main);
-}
-
-.dropdown-menu-dark .dropdown-divider { border-color: var(--line-soft); }
-
 /* =========================================================
    OFFCANVAS SIDEBAR (hidden by default, opens like a dropdown drawer)
    ========================================================= */
@@ -201,14 +152,6 @@ a { text-decoration: none; }
     color: var(--text-main);
 }
 
-.dot-badge {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--red-soft);
-    margin-left: auto;
-}
-
 .sidebar-profile {
     display: flex;
     align-items: center;
@@ -237,6 +180,8 @@ a { text-decoration: none; }
     font-size: .8rem;
     flex-shrink: 0;
 }
+
+.avatar-guest { color: var(--text-muted); font-size: 1rem; }
 
 /* =========================================================
    HERO CAROUSEL — compact, not full viewport height
@@ -499,41 +444,3 @@ a { text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
     .field-card, .carousel-item { transition: none !important; }
 }
-
-/* =========================================================
-   AUTH MODALS (Login / Sign Up)
-   ========================================================= */
-.auth-modal {
-    background: var(--navy-card);
-    color: var(--text-main);
-    border: 1px solid var(--line-soft);
-    border-radius: var(--radius-lg);
-}
-
-.auth-modal .modal-title { font-weight: 700; }
-
-.auth-modal .form-label { color: var(--text-muted); }
-
-.auth-input {
-    background: var(--navy-base);
-    border: 1px solid var(--line-soft);
-    color: var(--text-main);
-    border-radius: var(--radius-md);
-    padding: .6rem .8rem;
-}
-
-.auth-input:focus {
-    background: var(--navy-base);
-    color: var(--text-main);
-    border-color: var(--green);
-    box-shadow: 0 0 0 .2rem rgba(0, 230, 118, 0.18);
-}
-
-.auth-input::placeholder { color: rgba(234, 240, 246, 0.35); }
-
-.link-accent {
-    color: var(--green);
-    font-weight: 600;
-}
-
-.link-accent:hover { color: var(--green-dim); }
