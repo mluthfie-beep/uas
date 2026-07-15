@@ -30,8 +30,8 @@
                 <a class="nav-link px-2" href="#"><i class="bi bi-bell-fill text-warning"></i></a>
                 <div class="dropdown">
                     <button class="btn btn-user-menu dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="avatar-circle avatar-sm">BS</span>
-                        <span class="d-none d-md-inline ms-2">Budi Santoso</span>
+                        <span class="avatar-circle avatar-sm">J</span>
+                        <span class="d-none d-md-inline ms-2">Junaedi</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
                         <li><a class="dropdown-item" href="profil.html"><i class="bi bi-person-fill me-2"></i>Profil &amp; Riwayat</a></li>
@@ -43,11 +43,11 @@
         </div>
     </nav>
 
-    <!-- ============ OFFCANVAS SIDEBAR (seragam dengan index.html) ============ -->
+    <!-- ============ OFFCANVAS SIDEBAR ============ -->
     <div class="offcanvas offcanvas-start sidebar-menu" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
         <div class="offcanvas-header">
-            <a href="index.html" class="offcanvas-title fw-bold" id="sidebarMenuLabel">
-                <i class="bx bx-football"></i> Amikom Mini Soccer
+            <a href="#beranda" class="offcanvas-title fw-bold" id="sidebarMenuLabel">
+                <i class="bx bx-football me-1"></i>Amikom Mini Soccer
             </a>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
@@ -56,9 +56,10 @@
             <span class="sidebar-heading">Menu</span>
             <ul class="sidebar-nav">
                 <li><a href="beranda.html"><i class="bi bi-house-door-fill"></i>Beranda</a></li>
-                <li><a href="jadwal.html" class="active"><i class="bi bi-calendar2-week-fill"></i>Jadwal Lapangan</a></li>
+                <li><a href="jadwal.html"><i class="bi bi-calendar2-week-fill"></i>Jadwal Lapangan</a></li>
                 <li><a href="pembayaran.html"><i class="bi bi-credit-card-fill"></i>Pembayaran</a></li>
             </ul>
+
 
             <span class="sidebar-heading">Akun</span>
             <ul class="sidebar-nav">
@@ -66,9 +67,9 @@
             </ul>
 
             <div class="sidebar-profile mt-auto">
-                <div class="avatar-circle">BS</div>
+                <div class="avatar-circle">J</div>
                 <div class="flex-grow-1">
-                    <div class="fw-semibold small text-white">Budi Santoso</div>
+                    <div class="fw-semibold small text-white">Junaedi</div>
                     <div class="text-muted-soft small">Pelanggan</div>
                 </div>
             </div>
@@ -78,8 +79,9 @@
     <main class="flex-grow-1 p-4 overflow-auto hide-scroll main-content">
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-4 gap-3">
             <h3 class="fw-bold text-white m-0">Jadwal Lapangan</h3>
-            <div class="bg-panel px-3 py-2 rounded border border-panel text-secondary" style="font-size: 14px;">
-                <i class="bi bi-calendar-event me-2"></i> Senin, 23 Juni 2030
+            <div class="bg-panel px-3 py-2 rounded border border-panel text-secondary position-relative" style="font-size: 14px; cursor: pointer;" id="tanggalWrapper">
+                <i class="bi bi-calendar-event me-2"></i><span id="tanggalDisplay">Rabu, 15 Juni 2026</span>
+                <input type="date" id="tanggalInput" class="position-absolute top-0 start-0 w-100 h-100" style="opacity: 0; pointer-events: none; border: 0;">
             </div>
         </div>
         
@@ -226,7 +228,7 @@
                 </div>
                 <div class="d-flex justify-content-between mb-2" style="font-size: 14px;">
                     <span class="text-secondary">Tanggal</span>
-                    <strong class="text-white">Senin, 23 Juni 2030</strong>
+                    <strong class="text-white" id="out-tanggal">Rabu, 15 Juni 2026</strong>
                 </div>
                 <div class="d-flex justify-content-between mb-3" style="font-size: 14px;">
                     <span class="text-secondary">Durasi</span>
@@ -242,9 +244,9 @@
             </div>
         </div>
 
-        <a href="pembayaran.html" class="btn btn-emerald w-100 py-2 mb-4 d-flex justify-content-center align-items-center gap-2" id="btn-submit">
+       <button type="button" class="btn btn-emerald w-100 py-2 mb-4 d-flex justify-content-center align-items-center gap-2" id="btn-submit">
             Lanjut ke Pembayaran <i class="bi bi-arrow-right"></i>
-        </a>
+        </button>
 
         <div class="tips-box p-3 border border-panel rounded-3 d-flex gap-2 align-items-start mt-auto">
             <i class="bi bi-lightbulb-fill text-warning mt-1"></i>
@@ -264,11 +266,62 @@
         const outDurasi = document.getElementById('out-durasi');
         const outJam = document.getElementById('out-jam');
         const outTotal = document.getElementById('out-total');
+        const outTanggal = document.getElementById('out-tanggal');
         const slots = document.querySelectorAll('.slot[data-lap]');
 
         function formatRupiah(angka) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
         }
+
+        // --- 1b. DATE PICKER: pilih tanggal, tanggal kemarin & sebelumnya terkunci ---
+        const tanggalInput = document.getElementById('tanggalInput');
+        const tanggalDisplay = document.getElementById('tanggalDisplay');
+        let tanggalTerpilih = tanggalDisplay.textContent.trim();
+
+        const hariNames = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu'];
+        const bulanNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+        function formatTanggalIndo(dateStr) {
+            const [y, m, d] = dateStr.split('-').map(Number);
+            const dateObj = new Date(y, m - 1, d);
+            return hariNames[dateObj.getDay()] + ', ' + d + ' ' + bulanNames[m - 1] + ' ' + y;
+        }
+
+        function toDateInputValue(dateObj) {
+            const y = dateObj.getFullYear();
+            const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const d = String(dateObj.getDate()).padStart(2, '0');
+            return y + '-' + m + '-' + d;
+        }
+
+        // Kunci tanggal kemarin dan sebelumnya — minimal hari ini
+        const hariIni = new Date();
+        hariIni.setHours(0, 0, 0, 0);
+        tanggalInput.min = toDateInputValue(hariIni);
+
+        // Nilai default input mengikuti tanggal yang tampil di panel (jika sudah lewat, pakai hari ini)
+        const defaultDate = new Date(2030, 5, 23); // 23 Juni 2030, sesuai teks bawaan
+        tanggalInput.value = defaultDate < hariIni ? toDateInputValue(hariIni) : toDateInputValue(defaultDate);
+
+        tanggalInput.addEventListener('change', function () {
+            if (!this.value) return;
+            tanggalTerpilih = formatTanggalIndo(this.value);
+            tanggalDisplay.textContent = tanggalTerpilih;
+            if (outTanggal) outTanggal.textContent = tanggalTerpilih;
+        });
+
+        // Klik di mana saja pada panel akan membuka date picker
+        const tanggalWrapper = document.getElementById('tanggalWrapper');
+        tanggalWrapper.addEventListener('click', function () {
+            if (typeof tanggalInput.showPicker === 'function') {
+                // Chrome / Edge / browser Chromium lainnya
+                tanggalInput.showPicker();
+            } else {
+                // Fallback untuk Firefox / Safari
+                tanggalInput.focus();
+                tanggalInput.click();
+            }
+        });
 
         // --- 2. HITUNG ULANG RINGKASAN BERDASARKAN SLOT YANG DIPILIH (class "anda") ---
         function refreshRingkasan() {
@@ -325,6 +378,44 @@
                 refreshRingkasan();
             });
         });
+
+        document.getElementById('btn-submit').addEventListener('click', function() {
+    const selected = Array.from(document.querySelectorAll('.slot.anda[data-lap]'));
+
+    if (selected.length === 0) {
+        alert('Pilih dulu minimal 1 slot jam di jadwal.');
+        return;
+    }
+
+    const namaInput = document.querySelector('input[placeholder="Masukkan nama..."]').value;
+    const teleponInput = document.querySelector('input[placeholder="08..."]').value;
+
+    if (!namaInput || !teleponInput) {
+        alert('Lengkapi nama dan nomor telepon dulu.');
+        return;
+    }
+
+    const harga = parseInt(inputLapangan.value) || 0;
+    const namaLapangan = inputLapangan.options[inputLapangan.selectedIndex].getAttribute('data-nama');
+    const durasi = selected.length;
+    const total = harga * durasi;
+    const jamList = selected.map(s => s.getAttribute('data-jam')).sort();
+
+    const bookingData = {
+        idBooking: 'BR-' + Math.floor(1000 + Math.random() * 9000),
+        nama: namaInput,
+        telepon: teleponInput,
+        lapangan: namaLapangan,
+        tanggal: tanggalTerpilih,
+        jamMulai: jamList[0],
+        durasi: durasi,
+        hargaPerJam: harga,
+        total: total
+    };
+
+    localStorage.setItem('bookingData', JSON.stringify(bookingData));
+    window.location.href = 'pembayaran.html';
+});
     </script>
 </body>
 </html>

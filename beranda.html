@@ -57,9 +57,9 @@
 
                      <div class="d-flex align-items-center gap-2 ms-auto">
                             <div class="dropdown">
-                                <button class="btn btn-user-menu dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                 <span class="avatar-circle avatar-sm">BS</span>
-                                    <span class="d-none d-md-inline ms-2">Budi Santoso</span>
+                                <button class="btn btn-user-menu dropdown-toggle d-inline-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="avatar-circle avatar-sm">J</span>
+                                    <span class="d-none d-md-inline ms-2">Junaedi</span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
                                     <li><a class="dropdown-item" href="profil.html"><i class="bi bi-person-fill me-2"></i>Profil &amp; Riwayat</a></li>
@@ -71,7 +71,7 @@
 
                     <!--tombol cta-->
                     <li class="nav-item ms-lg-2">
-                        <a class="btn btn-sm fw-semibold px-4 btn-accent js-require-auth" href="jadwal.html">
+                        <a class="btn btn-sm fw-semibold px-4 btn-accent" href="jadwal.html">
                             <i class="bi bi-bookmark-plus me-1"></i>Pesan Sekarang
                         </a>
                     </li>
@@ -84,7 +84,7 @@
     <div class="offcanvas offcanvas-start sidebar-menu" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
         <div class="offcanvas-header">
             <a href="#beranda" class="offcanvas-title fw-bold" id="sidebarMenuLabel">
-                <i class="bx bx-football me-1"></i>FutsalPro
+                <i class="bx bx-football me-1"></i>Amikom Mini Soccer
             </a>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
@@ -103,14 +103,12 @@
                 <li><a href="profil.html"><i class="bi bi-person-fill"></i>Profil &amp; Riwayat</a></li>
             </ul>
 
-            <!-- Guest profile (default) -->
-            <div class="sidebar-profile mt-auto" id="sidebarProfileGuest">
-                <div class="avatar-circle avatar-guest"><i class="bi bi-person"></i></div>
+            <div class="sidebar-profile mt-auto">
+                <div class="avatar-circle">J</div>
                 <div class="flex-grow-1">
-                    <div class="fw-semibold small text-white">Tamu</div>
-                    <div class="text-muted-soft small">Belum masuk</div>
+                    <div class="fw-semibold small text-white">Junaedi</div>
+                    <div class="text-muted-soft small">Pelanggan</div>
                 </div>
-                <button type="button" class="btn btn-sm btn-accent" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="offcanvas">Masuk</button>
             </div>
 
             <!-- Logged-in profile (hidden until user masuk/daftar) -->
@@ -120,7 +118,7 @@
                     <div class="fw-semibold small text-white" id="sidebarUserName">Pengguna</div>
                     <div class="text-muted-soft small">Pelanggan</div>
                 </div>
-                <button type="button" class="btn btn-sm btn-field" id="sidebarLogoutBtn">Keluar</button>
+                <button type="button" class="btn btn-sm btn-field" id="sidebarLogoutBtn" onclick="window.location.href='index.html'">Keluar</button>
             </div>
         </div>
     </div>
@@ -191,7 +189,7 @@
                             <p class="text-white text-opacity-75 mb-4 slide-desc">
                                 Pantau status booking secara real-time, tanpa risiko jadwal bentrok atau double booking.
                             </p>
-                            <a href="jadwal.html" class="btn fw-semibold shadow btn-accent js-require-auth">
+                            <a href="jadwal.html" class="btn fw-semibold shadow btn-accent">
                                 <i class="bi bi-lightning-charge-fill me-2"></i>Mulai Booking
                             </a>
                         </div>
@@ -274,7 +272,7 @@
                             <p class="field-desc">Rumput Sintetis · AC · Indoor</p>
                             <div class="field-footer">
                                 <div class="field-price">Rp 80.000<span>/jam</span></div>
-                                <a href="jadwal.html" class="btn btn-sm btn-field js-require-auth">Pesan</a>
+                                <a href="jadwal.html" class="btn btn-sm btn-field">Pesan</a>
                             </div>
                         </div>
                     </div>
@@ -294,7 +292,7 @@
                             <p class="field-desc">Rumput Sintetis · Standar · Indoor</p>
                             <div class="field-footer">
                                 <div class="field-price">Rp 80.000<span>/jam</span></div>
-                                <a href="jadwal.html" class="btn btn-sm btn-field js-require-auth">Pesan</a>
+                                <a href="jadwal.html" class="btn btn-sm btn-field">Pesan</a>
                             </div>
                         </div>
                     </div>
@@ -314,7 +312,7 @@
                             <p class="field-desc">Parket · Mini · Semi-Indoor</p>
                             <div class="field-footer">
                                 <div class="field-price">Rp 75.000<span>/jam</span></div>
-                                <a href="jadwal.html" class="btn btn-sm btn-field js-require-auth">Pesan</a>
+                                <a href="jadwal.html" class="btn btn-sm btn-field">Pesan</a>
                             </div>
                         </div>
                     </div>
@@ -363,7 +361,7 @@
         <div class="container text-center">
             <h2 class="section-title mb-3">Siap Main Bareng Tim Kamu?</h2>
             <p class="text-muted-soft mb-4">Pesan lapangan sekarang, cukup beberapa klik dari HP kamu.</p>
-            <a href="#" class="btn btn-lg btn-accent px-5 fw-semibold js-require-auth" data-auth-action="confirm">
+            <a href="jadwal.html" class="btn btn-lg btn-accent px-5 fw-semibold">
                 <i class="bi bi-bookmark-plus me-2"></i>Pesan Sekarang
             </a>
         </div>

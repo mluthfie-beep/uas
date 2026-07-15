@@ -65,4 +65,40 @@ document.addEventListener('DOMContentLoaded', function () {
         counters.forEach((counter) => observer.observe(counter));
     }
 
+    /* ---------------------------------------------------------
+       4) Require login when guest clicks a "Pesan" / booking button
+    --------------------------------------------------------- */
+    // Ganti nilai ini menjadi true begitu sistem login sungguhan aktif,
+    // atau sambungkan ke status sesi/token pengguna yang sebenarnya.
+    const isLoggedIn = false;
+
+    const authAlertEl = document.getElementById('authAlertModal');
+    const authAlertModal = authAlertEl && window.bootstrap
+        ? bootstrap.Modal.getOrCreateInstance(authAlertEl)
+        : null;
+
+    document.querySelectorAll('.js-require-auth').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            if (!isLoggedIn) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (authAlertModal) authAlertModal.show();
+            }
+            // Jika sudah login, biarkan tombol berjalan normal (scroll ke #booking, dll.)
+        });
+    });
+
+    // Saat tombol OK di alert ditekan: arahkan ke halaman login.html
+    const authAlertOkBtn = document.getElementById('authAlertOkBtn');
+    if (authAlertOkBtn) {
+        authAlertOkBtn.addEventListener('click', () => {
+            window.location.href = 'login.html';
+        });
+    }
+
+});
+
+document.getElementById('sidebarLogoutBtn').addEventListener('click', function() {
+    window.location.href = 'index.html'; // Ganti dengan halaman tujuan
 });
