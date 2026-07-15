@@ -32,6 +32,10 @@ body{ padding-top: 64px; }
 }
 #mainNavbar .text-emerald{ color:var(--amn-green) !important; }
 
+.bx-football{
+    color: #4ade80;
+}
+
 #mainNavbar .btn-sidebar-toggle{
   background:transparent;
   border:1px solid var(--amn-border);
