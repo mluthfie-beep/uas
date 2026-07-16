@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Amikom Mini Soccer (Interactive & Responsive)</title>
+    <title>Dashboard Vanguard Sports (Interactive & Responsive)</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -23,8 +23,8 @@
                 <i class="bi bi-list"></i>
             </button>
 
-            <a class="navbar-brand fw-bold" href="index.html">
-                <i class="bx bx-football"></i> Amikom Mini Soccer
+            <a class="navbar-brand fw-bold" href="beranda.html">
+                <i class="bx bx-football"></i> Vanguard Sports
             </a>
 
             <div class="d-flex align-items-center gap-2 ms-auto">
@@ -37,7 +37,7 @@
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
                         <li><a class="dropdown-item" href="profil.html"><i class="bi bi-person-fill me-2"></i>Profil &amp; Riwayat</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><button type="button" class="dropdown-item"><i class="bi bi-box-arrow-right me-2"></i>Keluar</button></li>
+                        <li><a class="dropdown-item" href="index.html"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
                     </ul>
                 </div>
             </div>
@@ -48,7 +48,7 @@
     <div class="offcanvas offcanvas-start sidebar-menu" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
         <div class="offcanvas-header">
             <a href="#beranda" class="offcanvas-title fw-bold" id="sidebarMenuLabel">
-                <i class="bx bx-football me-1"></i>Amikom Mini Soccer
+                <i class="bx bx-football me-1"></i>Vanguard Sports
             </a>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
@@ -104,19 +104,19 @@
                 <div class="slot tersedia" data-lap="C" data-jam="08:00">Tersedia</div>
 
                 <div class="slot slot-header d-flex align-items-center justify-content-center">09:00</div>
-                <div class="slot terisi" data-lap="A" data-jam="09:00">Terisi</div>
+                <div class="slot tersedia" data-lap="A" data-jam="09:00">Tersedia</div>
                 <div class="slot tersedia" data-lap="B" data-jam="09:00">Tersedia</div>
                 <div class="slot tersedia" data-lap="C" data-jam="09:00">Tersedia</div>
 
                 <div class="slot slot-header d-flex align-items-center justify-content-center">10:00</div>
-                <div class="slot terisi" data-lap="A" data-jam="10:00">Terisi</div>
+                <div class="slot tersedia" data-lap="A" data-jam="10:00">Tersedia</div>
                 <div class="slot tersedia" data-lap="B" data-jam="10:00">Tersedia</div>
-                <div class="slot terisi" data-lap="C" data-jam="10:00">Terisi</div>
+                <div class="slot tersedia" data-lap="C" data-jam="10:00">Tersedia</div>
                 
                 <div class="slot slot-header d-flex align-items-center justify-content-center">11:00</div>
-                <div class="slot terisi" data-lap="A" data-jam="11:00">Terisi</div>
+                <div class="slot tersedia" data-lap="A" data-jam="11:00">Tersedia</div>
                  <div class="slot tersedia" data-lap="B" data-jam="11:00">Tersedia</div>
-                <div class="slot terisi" data-lap="C" data-jam="11:00">terisi</div>
+                <div class="slot tersedia" data-lap="C" data-jam="11:00">Tersedia</div>
                 
                 <div class="slot slot-header d-flex align-items-center justify-content-center">12:00</div>
                 <div class="slot tersedia" data-lap="A" data-jam="12:00">Tersedia</div>
@@ -252,7 +252,7 @@
         <div class="tips-box p-3 border border-panel rounded-3 d-flex gap-2 align-items-start mt-auto">
             <i class="bi bi-lightbulb-fill text-warning mt-1"></i>
             <p class="text-secondary mb-0" style="font-size: 12px; line-height: 1.6;">
-                <span class="text-emerald fw-bold">Tips:</span> Klik slot <b>Tersedia</b> di papan jadwal untuk memilih jam. Klik lagi untuk membatalkan.
+                <span class="text-emerald fw-bold">Tips:</span> Klik slot <b>Tersedia</b> di papan jadwal untuk memilih jam. Klik lagi untuk membatalkan. Setelah booking berhasil dikirim, slot yang dipilih akan otomatis berubah jadi <b>Terisi</b> dan tidak bisa dipilih lagi.
             </p>
         </div>
     </aside>
@@ -309,6 +309,8 @@
             tanggalTerpilih = formatTanggalIndo(this.value);
             tanggalDisplay.textContent = tanggalTerpilih;
             if (outTanggal) outTanggal.textContent = tanggalTerpilih;
+            terapkanSlotTerbooking();
+            refreshRingkasan();
         });
 
         // Klik di mana saja pada panel akan membuka date picker
@@ -321,6 +323,56 @@
                 // Fallback untuk Firefox / Safari
                 tanggalInput.focus();
                 tanggalInput.click();
+            }
+        });
+
+        // --- 1c. SLOT YANG SUDAH DIBOOKING (PERMANEN JADI "TERISI") ---
+        // Disimpan di localStorage supaya begitu sebuah jam sudah dipilih & dibooking,
+        // slot itu tidak akan bisa dipilih lagi (oleh siapapun) walau halaman dibuka ulang.
+        const BOOKED_KEY = 'jadwalTerisi';
+
+        function getBookedMap() {
+            try {
+                return JSON.parse(localStorage.getItem(BOOKED_KEY)) || {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function saveBookedSlots(tanggalKey, entries) {
+            const map = getBookedMap();
+            const existing = new Set(map[tanggalKey] || []);
+            entries.forEach(e => existing.add(e));
+            map[tanggalKey] = Array.from(existing);
+            localStorage.setItem(BOOKED_KEY, JSON.stringify(map));
+        }
+
+        // Terapkan status "terisi" ke slot yang sudah dibooking untuk tanggal yang sedang aktif
+        function terapkanSlotTerbooking() {
+            const map = getBookedMap();
+            const bookedForDate = new Set(map[tanggalTerpilih] || []);
+
+            slots.forEach(slot => {
+                const key = slot.getAttribute('data-lap') + '-' + slot.getAttribute('data-jam');
+
+                if (bookedForDate.has(key)) {
+                    // Kunci slot ini: sudah dibooking, tidak bisa dipilih lagi
+                    slot.classList.remove('tersedia', 'anda');
+                    slot.classList.add('terisi');
+                    slot.textContent = 'Terisi';
+                } else if (slot.classList.contains('terisi') && slot.dataset.originalTerisi !== 'true') {
+                    // Slot lain yang bukan bawaan "terisi" & tidak ada di daftar booking utk tanggal ini -> kembalikan tersedia
+                    slot.classList.remove('terisi');
+                    slot.classList.add('tersedia');
+                    slot.textContent = 'Tersedia';
+                }
+            });
+        }
+
+        // Tandai slot "terisi" bawaan (hardcoded di HTML) supaya tidak ikut ter-reset saat ganti tanggal
+        slots.forEach(slot => {
+            if (slot.classList.contains('terisi')) {
+                slot.dataset.originalTerisi = 'true';
             }
         });
 
@@ -351,11 +403,17 @@
         }
 
         inputLapangan.addEventListener('change', refreshRingkasan);
+        terapkanSlotTerbooking();
         refreshRingkasan();
 
         // --- 3. KLIK SLOT JADWAL: 1 kotak dipilih = 1 jam ---
         slots.forEach(slot => {
             slot.addEventListener('click', function() {
+                // Slot yang sudah "Terisi" (sudah dibooking) tidak bisa dipilih lagi
+                if (this.classList.contains('terisi')) {
+                    return;
+                }
+
                 const lapSlot = this.getAttribute('data-lap');
                 const sudahAdaPilihan = document.querySelector('.slot.anda[data-lap]');
                 const lapAktif = sudahAdaPilihan ? sudahAdaPilihan.getAttribute('data-lap') : null;
@@ -415,6 +473,12 @@
     };
 
     localStorage.setItem('bookingData', JSON.stringify(bookingData));
+
+    // Kunci slot-slot yang baru dibooking supaya tidak bisa dipilih lagi (oleh siapapun)
+    const kunciSlot = selected.map(s => s.getAttribute('data-lap') + '-' + s.getAttribute('data-jam'));
+    saveBookedSlots(tanggalTerpilih, kunciSlot);
+    terapkanSlotTerbooking();
+
     window.location.href = 'pembayaran.html';
 });
     </script>

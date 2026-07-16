@@ -113,3 +113,10 @@
         .footer-text a:hover {
             text-decoration: underline;
         }
+
+        .pesan-error {
+            color: #FF4C6A;
+            font-size: 13px;
+            text-align: center;
+            margin: -10px 0 15px;
+        }
