@@ -126,82 +126,103 @@
 
     <!-- ============ HERO CAROUSEL (compact) ============ -->
     <div id="heroCarousel" class="carousel slide carousel-fade hero-carousel" data-bs-ride="carousel" data-bs-interval="4500">
-
         <div class="carousel-inner">
 
-            <!--Slide 1-->
-            <div class="carousel-item active slide-1">
-                <div class="container slide-content">
-                    <div class="row align-items-center h-100">
-                        <div class="col-lg-8">
-                            <span class="badge eyebrow-badge mb-3 px-3">Sistem Booking Digital</span>
-                            <h1 class="fw-bold text-white lh-sm mb-3">
-                                Pesan Lapangan<br>Futsal Kapan Saja
-                            </h1>
-                            <p class="text-white text-opacity-75 mb-4 slide-desc">
-                                Tidak perlu datang langsung atau menghubungi admin berkali-kali. Cek jadwal, booking, dan bayar dalam satu platform.
-                            </p>
-                            <div class="d-flex flex-wrap gap-3">
-                                <a href="#lapangan" class="btn fw-semibold shadow btn-accent">
-                                    <i class="bi bi-calendar-check me-2"></i>Lihat Jadwal
-                                </a>
-                                <a href="#keunggulan" class="btn btn-outline-light">Pelajari Lebih Lanjut</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 d-none d-lg-flex justify-content-center">
-                            <i class="bi bi-dribbble slide-icon"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Slide 1 -->
+        <div class="carousel-item active slide-1 overflow-hidden" style="min-height: 80vh;">
+            
+            <!-- GAMBAR BACKGROUND -->
+            <img src="ball.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover; z-index: 0;" alt="Futsal 1">
+            <!-- OVERLAY GELAP (Agar teks putih tetap terbaca) -->
+            <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark" style="opacity: 0.6; z-index: 1;"></div>
 
-            <!--slide 2-->
-            <div class="carousel-item slide-2">
-                <div class="container slide-content">
-                    <div class="row align-items-center h-100">
-                        <div class="col-lg-8">
-                            <span class="badge eyebrow-badge mb-3 px-3">Fasilitas Lengkap</span>
-                            <h1 class="fw-bold text-white lh-sm mb-3">
-                                3 Lapangan Siap<br>Untuk Tim Kamu
-                            </h1>
-                            <p class="text-white text-opacity-75 mb-4 slide-desc">
-                                Rumput sintetis, sirkulasi udara nyaman, dan pencahayaan malam untuk pengalaman bermain terbaik.
-                            </p>
+            <!-- KONTEN (Tambahkan position-relative dan z-index agar berada di atas gambar) -->
+            <div class="container slide-content position-relative h-100" style="z-index: 2; padding-top: 5rem; padding-bottom: 5rem;">
+                <div class="row align-items-center h-100">
+                    <div class="col-lg-8">
+                        <span class="badge eyebrow-badge mb-3 px-3">Sistem Booking Digital</span>
+                        <h1 class="fw-bold text-white lh-sm mb-3">
+                            Pesan Lapangan<br>Futsal Kapan Saja
+                        </h1>
+                        <p class="text-white text-opacity-75 mb-4 slide-desc">
+                            Tidak perlu datang langsung atau menghubungi admin berkali-kali. Cek jadwal, booking, dan bayar dalam satu platform.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3">
                             <a href="#lapangan" class="btn fw-semibold shadow btn-accent">
-                                <i class="bi bi-grid-3x3-gap-fill me-2"></i>Lihat Lapangan
+                                <i class="bi bi-calendar-check me-2"></i>Lihat Jadwal
                             </a>
+                            <a href="#keunggulan" class="btn btn-outline-light">Pelajari Lebih Lanjut</a>
                         </div>
-                        <div class="col-lg-4 d-none d-lg-flex justify-content-center">
-                            <i class="bi bi-flag-fill slide-icon"></i>
-                        </div>
+                    </div>
+                    <div class="col-lg-4 d-none d-lg-flex justify-content-center">
+                        <i class="bi bi-dribbble slide-icon text-white" style="font-size: 8rem;"></i>
+                        <!-- OPSI: Jika ingin mengganti ikon kanan dengan gambar, hapus tag <i> di atas dan gunakan kode di bawah ini: -->
+                        <!-- <img src="GAMBAR_KANAN_1.png" class="img-fluid" alt="Ilustrasi Booking"> -->
                     </div>
                 </div>
             </div>
-
-            <!--slide 3-->
-            <div class="carousel-item slide-3">
-                <div class="container slide-content">
-                    <div class="row align-items-center h-100">
-                        <div class="col-lg-8">
-                            <span class="badge eyebrow-badge mb-3 px-3">Cepat &amp; Aman</span>
-                            <h1 class="fw-bold text-white lh-sm mb-3">
-                                Booking dan Bayar<br>Cukup Dalam 1 Menit
-                            </h1>
-                            <p class="text-white text-opacity-75 mb-4 slide-desc">
-                                Pantau status booking secara real-time, tanpa risiko jadwal bentrok atau double booking.
-                            </p>
-                            <a href="jadwal.html" class="btn fw-semibold shadow btn-accent">
-                                <i class="bi bi-lightning-charge-fill me-2"></i>Mulai Booking
-                            </a>
-                        </div>
-                        <div class="col-lg-4 d-none d-lg-flex justify-content-center">
-                            <i class="bi bi-phone-fill slide-icon"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-item slide-2 overflow-hidden" style="min-height: 80vh;">
+            
+            <!-- GAMBAR BACKGROUND -->
+            <img src="ball.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover; z-index: 0;" alt="Futsal 2">
+            <!-- OVERLAY GELAP -->
+            <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark" style="opacity: 0.6; z-index: 1;"></div>
+
+            <div class="container slide-content position-relative h-100" style="z-index: 2; padding-top: 5rem; padding-bottom: 5rem;">
+                <div class="row align-items-center h-100">
+                    <div class="col-lg-8">
+                        <span class="badge eyebrow-badge mb-3 px-3">Fasilitas Lengkap</span>
+                        <h1 class="fw-bold text-white lh-sm mb-3">
+                            3 Lapangan Siap<br>Untuk Tim Kamu
+                        </h1>
+                        <p class="text-white text-opacity-75 mb-4 slide-desc">
+                            Rumput sintetis, sirkulasi udara nyaman, dan pencahayaan malam untuk pengalaman bermain terbaik.
+                        </p>
+                        <a href="#lapangan" class="btn fw-semibold shadow btn-accent">
+                            <i class="bi bi-grid-3x3-gap-fill me-2"></i>Lihat Lapangan
+                        </a>
+                    </div>
+                    <div class="col-lg-4 d-none d-lg-flex justify-content-center">
+                        <i class="bi bi-flag-fill slide-icon text-white" style="font-size: 8rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-item slide-3 overflow-hidden" style="min-height: 80vh;">
+            
+            <!-- GAMBAR BACKGROUND -->
+            <img src="ball.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover; z-index: 0;" alt="Futsal 3">
+            <!-- OVERLAY GELAP -->
+            <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark" style="opacity: 0.6; z-index: 1;"></div>
+
+            <div class="container slide-content position-relative h-100" style="z-index: 2; padding-top: 5rem; padding-bottom: 5rem;">
+                <div class="row align-items-center h-100">
+                    <div class="col-lg-8">
+                        <span class="badge eyebrow-badge mb-3 px-3">Cepat &amp; Aman</span>
+                        <h1 class="fw-bold text-white lh-sm mb-3">
+                            Booking dan Bayar<br>Cukup Dalam 1 Menit
+                        </h1>
+                        <p class="text-white text-opacity-75 mb-4 slide-desc">
+                            Pantau status booking secara real-time, tanpa risiko jadwal bentrok atau double booking.
+                        </p>
+                        <a href="jadwal.html" class="btn fw-semibold shadow btn-accent">
+                            <i class="bi bi-lightning-charge-fill me-2"></i>Mulai Booking
+                        </a>
+                    </div>
+                    <div class="col-lg-4 d-none d-lg-flex justify-content-center">
+                        <i class="bi bi-phone-fill slide-icon text-white" style="font-size: 8rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 
         <div class="carousel-indicators hero-indicators">
             <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
