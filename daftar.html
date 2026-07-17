@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Daftar</title>
+    <link rel="stylesheet" href="login.css">
+     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Buat Akun Baru</h2>
+        <form id="formDaftar" action="beranda.html" method="GET">
+            <div class="form-group">
+                <label for="nama">Nama Lengkap</label>
+                <input type="text" id="nama" name="nama" required placeholder="Masukkan nama lengkap Anda">
+                <i class='bx bxs-user-detail'></i>
+            </div>
+            <div class="form-group">
+                <label for="username">Username atau Email</label>
+                <input type="text" id="username" name="username" required placeholder="Masukkan username atau email Anda">
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required minlength="6" placeholder="Buat password Anda">
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+            <div class="form-group">
+                <label for="konfirmasi">Konfirmasi Password</label>
+                <input type="password" id="konfirmasi" name="konfirmasi" required minlength="6" placeholder="Ulangi password Anda">
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+            <p id="pesanError" class="pesan-error" style="display:none;">Password dan konfirmasi tidak sama.</p>
+            <button type="submit" class="btn-login">Daftar</button>
+        </form>
+        <div class="footer-text">
+           <p>Sudah punya akun?</p><a href="login.html">Masuk di sini</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('formDaftar').addEventListener('submit', function (e) {
+            const password = document.getElementById('password').value;
+            const konfirmasi = document.getElementById('konfirmasi').value;
+            const pesanError = document.getElementById('pesanError');
+
+            if (password !== konfirmasi) {
+                e.preventDefault();
+                pesanError.style.display = 'block';
+            } else {
+                pesanError.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>

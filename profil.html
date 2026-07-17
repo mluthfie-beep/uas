@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amikom Mini Soccer — Profil & Riwayat</title>
+<title>Vanguard Sports — Profil & Riwayat</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <!--Bootstrap CSS-->
@@ -141,8 +141,8 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
                 <i class="bi bi-list"></i>
             </button>
 
-            <a class="navbar-brand fw-bold" href="index.html">
-                <i class="bx bx-football"></i> Amikom Mini Soccer
+            <a class="navbar-brand fw-bold" href="beranda.html">
+                <i class="bx bx-football"></i> Vanguard Sports
             </a>
 
             <div class="d-flex align-items-center gap-2 ms-auto">
@@ -155,7 +155,7 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
                         <li><a class="dropdown-item" href="profil.html"><i class="bi bi-person-fill me-2"></i>Profil &amp; Riwayat</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><button type="button" class="dropdown-item"><i class="bi bi-box-arrow-right me-2"></i>Keluar</button></li>
+                        <li><a class="dropdown-item" href="index.html"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
                     </ul>
                 </div>
             </div>
@@ -166,7 +166,7 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
     <div class="offcanvas offcanvas-start sidebar-menu" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
         <div class="offcanvas-header">
             <a href="index.html" class="offcanvas-title fw-bold" id="sidebarMenuLabel">
-                <i class="bx bx-football"></i> Amikom Mini Soccer
+                <i class="bx bx-football"></i> Vanguard Sports
             </a>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
@@ -217,8 +217,8 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
             <div class="pc-name" id="pcName">Junaedi</div>
             <div class="pc-email" id="pcEmail">junabin.junaedi@email.com</div>
             <div class="pc-stats">
-              <div class="pcs"><div class="pcs-val">12</div><div class="pcs-lbl">Total Booking</div></div>
-              <div class="pcs"><div class="pcs-val" style="color:var(--amber)">Rp 1,4jt</div><div class="pcs-lbl">Total Bayar</div></div>
+              <div class="pcs"><div class="pcs-val" id="statTotalBooking">0</div><div class="pcs-lbl">Total Booking</div></div>
+              <div class="pcs"><div class="pcs-val" id="statTotalBayar" style="color:var(--amber)">Rp 0</div><div class="pcs-lbl">Total Bayar</div></div>
             </div>
             <div class="divider"></div>
             <div class="detail-row"><span class="k">No. Telepon</span><span class="v" id="pcPhone">0812-3456-7890</span></div>
@@ -240,7 +240,7 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
 
         <!-- Loyalty -->
         <div class="loyalty-card">
-          <div class="loyalty-title">🏅 Member Amikom Mini Soccer</div>
+          <div class="loyalty-title">🏅 Member Vanguard Sports</div>
           <div class="loyalty-level">Silver Member</div>
           <div class="loyalty-pts">1.240 poin &nbsp;·&nbsp; 60% menuju Gold</div>
           <div class="loyalty-bar-wrap"><div class="loyalty-bar-fill"></div></div>
@@ -259,7 +259,7 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
         <!-- TAB: Riwayat -->
         <div class="tab-panel active" id="tab-riwayat">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <span style="font-size:13px;font-weight:700" id="riwayat-count">12 Booking Tercatat</span>
+            <span style="font-size:13px;font-weight:700" id="riwayat-count">0 Booking Tercatat</span>
             <select class="field-input" style="width:auto;font-size:12px;padding:7px 12px" id="filterStatus" onchange="filterRiwayat()">
               <option value="semua">Semua Status</option>
               <option value="Dikonfirmasi">Dikonfirmasi</option>
@@ -268,74 +268,7 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
             </select>
           </div>
 
-          <div id="riwayat-list">
-
-          <div class="bh-card">
-            <div class="bh-icon a">🏟️</div>
-            <div class="bh-main">
-              <div class="bh-title">Lapangan A — 2 Jam</div>
-              <div class="bh-sub">23 Juni 2026 · 10.00–12.00 · <span style="color:var(--green);font-weight:600">#BK-0413</span></div>
-            </div>
-            <div class="bh-right">
-              <div class="bh-price" style="color:var(--amber)">Rp 160.000</div>
-              <span class="badge amber" style="font-size:10px;margin-top:4px;display:inline-flex"><span class="badge-dot"></span>Menunggu</span>
-            </div>
-          </div>
-
-          <div class="bh-card">
-            <div class="bh-icon g">🏟️</div>
-            <div class="bh-main">
-              <div class="bh-title">Lapangan A — 1 Jam</div>
-              <div class="bh-sub">14 Jun 2026 · 09.00–10.00 · <span style="color:var(--green);font-weight:600">#BK-0398</span></div>
-            </div>
-            <div class="bh-right">
-              <div class="bh-price">Rp 80.000</div>
-              <span class="badge green" style="font-size:10px;margin-top:4px;display:inline-flex"><span class="badge-dot"></span>Dikonfirmasi</span>
-            </div>
-          </div>
-
-          <div class="bh-card">
-            <div class="bh-icon g">🏟️</div>
-            <div class="bh-main">
-              <div class="bh-title">Lapangan B — 2 Jam</div>
-              <div class="bh-sub">5 Jun 2026 · 17.00–19.00 · <span style="color:var(--green);font-weight:600">#BK-0381</span></div>
-            </div>
-            <div class="bh-right">
-              <div class="bh-price">Rp 160.000</div>
-              <span class="badge green" style="font-size:10px;margin-top:4px;display:inline-flex"><span class="badge-dot"></span>Dikonfirmasi</span>
-            </div>
-          </div>
-
-          <div class="bh-card">
-            <div class="bh-icon r">🏟️</div>
-            <div class="bh-main">
-              <div class="bh-title">Lapangan C — 1 Jam</div>
-              <div class="bh-sub">28 Mei 2026 · 14.00–15.00 · <span style="color:var(--green);font-weight:600">#BK-0365</span></div>
-            </div>
-            <div class="bh-right">
-              <div class="bh-price" style="color:var(--danger)">Rp 75.000</div>
-              <span class="badge red" style="font-size:10px;margin-top:4px;display:inline-flex"><span class="badge-dot"></span>Dibatalkan</span>
-            </div>
-          </div>
-
-          <div class="bh-card">
-            <div class="bh-icon g">🏟️</div>
-            <div class="bh-main">
-              <div class="bh-title">Lapangan A — 3 Jam</div>
-              <div class="bh-sub">12 Mei 2026 · 19.00–22.00 · <span style="color:var(--green);font-weight:600">#BK-0352</span></div>
-            </div>
-            <div class="bh-right">
-              <div class="bh-price">Rp 240.000</div>
-              <span class="badge green" style="font-size:10px;margin-top:4px;display:inline-flex"><span class="badge-dot"></span>Dikonfirmasi</span>
-            </div>
-          </div>
-
-          </div>
-
-          <div style="text-align:center;padding:16px 0 4px">
-            <button class="btn btn-ghost">Muat 7 Booking Lainnya ↓</button>
-          </div>
-        </div>
+          <div id="riwayat-list"></div>
 
         <!-- TAB: Notifikasi -->
         <div class="tab-panel" id="tab-notif">
@@ -380,7 +313,7 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
           <div class="notif-card">
             <div class="notif-icon" style="background:var(--green-glow)">🎉</div>
             <div style="flex:1">
-              <div class="notif-title">Selamat Datang di Amikom Mini Soccer!</div>
+              <div class="notif-title">Selamat Datang di Vanguard Sports!</div>
               <div class="notif-body">Akun Anda berhasil terdaftar. Mulai booking lapangan favorit Anda sekarang dengan mudah dan cepat!</div>
             </div>
             <span class="notif-time">Jan 2026</span>
@@ -620,7 +553,40 @@ function filterRiwayat() {
   }
 }
 
+function formatRupiahSingkat(angka) {
+  if (angka >= 1000000) {
+    const jt = (angka / 1000000).toFixed(1).replace('.', ',').replace(',0', '');
+    return 'Rp ' + jt + 'jt';
+  }
+  if (angka >= 1000) {
+    const rb = Math.round(angka / 1000);
+    return 'Rp ' + rb + 'rb';
+  }
+  return formatRupiah(angka);
+}
+
+// --- Hitung Total Booking & Total Bayar dari riwayat booking yang tersimpan ---
+function hitungStatistikBooking() {
+  const riwayat = JSON.parse(localStorage.getItem('riwayatBooking') || '[]');
+
+  const totalBookingEl = document.getElementById('statTotalBooking');
+  const totalBayarEl = document.getElementById('statTotalBayar');
+  if (!totalBookingEl || !totalBayarEl) return;
+
+  // Total Booking = seluruh booking yang pernah tercatat (termasuk yang menunggu/dikonfirmasi)
+  const totalBooking = riwayat.length;
+
+  // Total Bayar = akumulasi nilai booking yang sudah/sedang dibayar (di luar yang dibatalkan)
+  const totalBayar = riwayat
+    .filter(item => item.status !== 'Dibatalkan')
+    .reduce((sum, item) => sum + (Number(item.total) || 0), 0);
+
+  totalBookingEl.textContent = totalBooking;
+  totalBayarEl.textContent = formatRupiahSingkat(totalBayar);
+}
+
 muatRiwayatBooking();
+hitungStatistikBooking();
 
 // Generate activity grid
 const actGrid = document.getElementById('act-grid');
