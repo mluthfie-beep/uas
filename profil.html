@@ -197,9 +197,9 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
 
 <main class="main">
   <div class="topbar">
-    <div class="page-title">👤 Profil & Riwayat</div>
+    <div class="page-title"><i class="bi bi-person-fill me-2"></i> Profil & Riwayat</div>
     <div class="topbar-right">
-      <a class="notif-btn" href="#">🔔<span class="notif-dot"></span></a>
+      <a class="notif-btn" href="#"><i class="bi bi-bell-fill text-warning"></i><span class="notif-dot"></span></a>
       <a href="jadwal.html" class="btn btn-primary">+ Booking Baru</a>
     </div>
   </div>
@@ -227,7 +227,7 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
             <div class="detail-row"><span class="k">Lap. Favorit</span><span class="v">Lapangan A</span></div>
             <div class="detail-row"><span class="k">Booking Aktif</span><span class="v" style="color:var(--amber)">1 booking</span></div>
             <div class="divider"></div>
-            <button class="btn btn-ghost" style="width:100%;margin-bottom:8px" onclick="toggleEdit()">✏️ Edit Profil</button>
+            <button class="btn btn-ghost" style="width:100%;margin-bottom:8px" onclick="toggleEdit()"><i class="bx bx-edit"></i> Edit Profil</button>
             <div class="edit-section" id="edit-section">
               <div class="field-group"><label class="field-label">Nama</label><input class="field-input" id="editNama" value="junaedi"></div>
               <div class="field-group"><label class="field-label">Email</label><input class="field-input" id="editEmail" type="email" value="junabin.junaedi@email.com"></div>
@@ -240,7 +240,7 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
 
         <!-- Loyalty -->
         <div class="loyalty-card">
-          <div class="loyalty-title">🏅 Member Vanguard Sports</div>
+          <div class="loyalty-title"><i class="bx bx-medal text-warning"></i> Member Vanguard Sports</div>
           <div class="loyalty-level">Silver Member</div>
           <div class="loyalty-pts">1.240 poin &nbsp;·&nbsp; 60% menuju Gold</div>
           <div class="loyalty-bar-wrap"><div class="loyalty-bar-fill"></div></div>
@@ -251,9 +251,9 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
       <!-- RIGHT: CONTENT TABS -->
       <div>
         <div class="htabs">
-          <div class="htab active" onclick="switchTab('riwayat',this)">📋 Riwayat Booking</div>
-          <div class="htab" onclick="switchTab('notif',this)">🔔 Notifikasi <span style="background:var(--danger);color:#fff;font-size:9px;font-weight:700;border-radius:10px;padding:1px 5px;margin-left:4px">2</span></div>
-          <div class="htab" onclick="switchTab('aktivitas',this)">📆 Aktivitas</div>
+          <div class="htab active" onclick="switchTab('riwayat',this)"><i class="bi bi-bookmark-fill"></i> Riwayat Booking</div>
+          <div class="htab" onclick="switchTab('notif',this)"><i class="bi bi-bell-fill text-warning"></i> Notifikasi <span style="background:var(--danger);color:#fff;font-size:9px;font-weight:700;border-radius:10px;padding:1px 5px;margin-left:4px">2</span></div>
+          <div class="htab" onclick="switchTab('aktivitas',this)"><i class="bi bi-calendar2-week-fill"></i> Aktivitas</div>
         </div>
 
         <!-- TAB: Riwayat -->
@@ -278,7 +278,7 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
           </div>
 
           <div class="notif-card unread">
-            <div class="notif-icon" style="background:rgba(255,183,3,0.12)">⏳</div>
+            <div class="notif-icon" style="background:rgba(255,183,3,0.12)"><i class="bx bx-clock"></i></div>
             <div style="flex:1">
               <div class="notif-title">Pembayaran Sedang Diverifikasi</div>
               <div class="notif-body">Bukti transfer <strong>#BK-0413</strong> sudah diterima. Admin sedang memverifikasi. Mohon tunggu 1×24 jam.</div>
@@ -290,7 +290,7 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
           </div>
 
           <div class="notif-card unread">
-            <div class="notif-icon" style="background:var(--green-glow)">✅</div>
+            <div class="notif-icon" style="background:var(--green-glow)"><i class="bx bx-check text-success"></i></div>
             <div style="flex:1">
               <div class="notif-title">Booking Dikonfirmasi</div>
               <div class="notif-body">Booking <strong>#BK-0398</strong> pada 14 Juni, Lapangan A 09.00–10.00 telah dikonfirmasi. Selamat bermain!</div>
@@ -302,7 +302,7 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
           </div>
 
           <div class="notif-card">
-            <div class="notif-icon" style="background:rgba(255,76,106,0.1)">❌</div>
+            <div class="notif-icon" style="background:rgba(255,76,106,0.1)"><i class="bx bx-x text-danger"></i></div>
             <div style="flex:1">
               <div class="notif-title">Booking Dibatalkan</div>
               <div class="notif-body">Booking <strong>#BK-0365</strong> pada 28 Mei, Lapangan C dibatalkan karena bukti transfer tidak valid. Hubungi admin.</div>
@@ -311,7 +311,7 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
           </div>
 
           <div class="notif-card">
-            <div class="notif-icon" style="background:var(--green-glow)">🎉</div>
+            <div class="notif-icon" style="background:var(--green-glow)"><i class="bx bx-party"></i></div>
             <div style="flex:1">
               <div class="notif-title">Selamat Datang di Vanguard Sports!</div>
               <div class="notif-body">Akun Anda berhasil terdaftar. Mulai booking lapangan favorit Anda sekarang dengan mudah dan cepat!</div>
@@ -481,15 +481,15 @@ function jamSelesai(jamMulai, durasi) {
   return String(selesai).padStart(2, '0') + '.' + String(m).padStart(2, '0');
 }
 
-// Peta status booking -> warna badge & ikon kartu
+// Peta status booking -> PENAMBAHAN PROPERTI BOXICON DI SINI
 const statusMap = {
-  'Menunggu Verifikasi': { badge: 'amber', icon: 'a', label: 'Menunggu' },
-  'Menunggu Bayar':      { badge: 'amber', icon: 'a', label: 'Menunggu' },
-  'Dikonfirmasi':        { badge: 'green', icon: 'g', label: 'Dikonfirmasi' },
-  'Dibatalkan':          { badge: 'red',   icon: 'r', label: 'Dibatalkan' }
+  'Menunggu Verifikasi': { badge: 'amber', icon: 'a', label: 'Menunggu', boxicon: 'bx-time-five' },
+  'Menunggu Bayar':      { badge: 'amber', icon: 'a', label: 'Menunggu', boxicon: 'bx-time-five' },
+  'Dikonfirmasi':        { badge: 'green', icon: 'g', label: 'Dikonfirmasi', boxicon: 'bx-check-circle' },
+  'Dibatalkan':          { badge: 'red',   icon: 'r', label: 'Dibatalkan', boxicon: 'bx-x-circle' }
 };
 
-// --- Render booking dari localStorage (hasil pemesanan di jadwal.html -> pembayaran.html) ---
+// --- Render booking dari localStorage ---
 function muatRiwayatBooking() {
   const riwayat = JSON.parse(localStorage.getItem('riwayatBooking') || '[]');
   if (!riwayat.length) return;
@@ -509,8 +509,10 @@ function muatRiwayatBooking() {
 
     const card = document.createElement('div');
     card.className = 'bh-card';
+    
+    // PEMANGGILAN BOXICON DINAMIS DI SINI -> <i class="bx ${st.boxicon}"></i>
     card.innerHTML = `
-      <div class="bh-icon ${st.icon}">🏟️</div>
+      <div class="bh-icon ${st.icon}"><i class="bx ${st.boxicon}"></i></div>
       <div class="bh-main">
         <div class="bh-title">${item.lapangan} — ${item.durasi} Jam</div>
         <div class="bh-sub">${item.tanggal} · ${waktuTampil} · <span style="color:var(--green);font-weight:600">#${item.idBooking}</span></div>
