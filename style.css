@@ -409,6 +409,19 @@ a { text-decoration: none; }
 .feature-desc { font-size: .88rem; color: var(--text-muted); margin-bottom: 0; }
 
 /* =========================================================
+   VIDEO FUTSAL
+   ========================================================= */
+.section-video {
+    background: linear-gradient(160deg, var(--navy-deep) 0%, #101E30 55%, var(--navy-mid) 100%);
+    padding: 4rem 0;
+    border-top: 1px solid var(--line-soft);
+}
+
+.section-video .ratio {
+    border: 1px solid var(--line-soft);
+}
+
+/* =========================================================
    CTA
    ========================================================= */
 .section-cta {
