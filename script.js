@@ -68,9 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
     /* ---------------------------------------------------------
        4) Require login when guest clicks a "Pesan" / booking button
     --------------------------------------------------------- */
-    // Ganti nilai ini menjadi true begitu sistem login sungguhan aktif,
-    // atau sambungkan ke status sesi/token pengguna yang sebenarnya.
-    const isLoggedIn = false;
+    // Menggunakan status sesi asli dari auth.js (localStorage), bukan lagi hardcode.
+    const isLoggedIn = typeof getUserAktif === 'function' && !!getUserAktif();
 
     const authAlertEl = document.getElementById('authAlertModal');
     const authAlertModal = authAlertEl && window.bootstrap
@@ -97,8 +96,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-});
-
-document.getElementById('sidebarLogoutBtn').addEventListener('click', function() {
-    window.location.href = 'index.html'; // Ganti dengan halaman tujuan
 });

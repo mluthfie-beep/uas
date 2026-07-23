@@ -13,126 +13,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 <link rel="stylesheet" href="shared-navbar.css">
 
-<style>
-.layout{display:grid;grid-template-columns:290px 1fr;gap:18px}
-
-/* Profile card */
-.profile-card{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;position:sticky;top:80px}
-.pc-cover{height:90px;background:linear-gradient(135deg,#0f2d1a,#1a4d35);position:relative}
-.pc-cover::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 30% 50%,rgba(0,230,118,0.15) 0%,transparent 60%)}
-.pc-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--slate),var(--green));display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;position:absolute;bottom:-32px;left:22px;border:4px solid var(--navy-mid);font-family:'Space Grotesk',sans-serif;z-index:2}
-.pc-body{padding:44px 22px 20px}
-.pc-name{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:800;margin-bottom:2px}
-.pc-email{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pc-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
-.pcs{background:var(--navy-light);border-radius:9px;padding:12px;text-align:center}
-.pcs-val{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:800;color:var(--green)}
-.pcs-lbl{font-size:10.5px;color:var(--muted);margin-top:2px}
-.divider{height:1px;background:rgba(255,255,255,0.07);margin:0 0 14px}
-.detail-row{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:9px}
-.detail-row .k{color:var(--muted)}
-.detail-row .v{font-weight:600}
-
-/* Edit form */
-.edit-section{margin-top:14px;display:none}
-.edit-section.show{display:block}
-
-/* Tabs */
-.htabs{display:flex;gap:4px;background:var(--navy-light);border-radius:9px;padding:4px;margin-bottom:18px;width:fit-content}
-.htab{padding:7px 16px;border-radius:6px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;user-select:none}
-.htab:hover{color:var(--white)}
-.htab.active{background:var(--navy-mid);color:var(--white);font-weight:600}
-
-/* Tab panels */
-.tab-panel{display:none}
-.tab-panel.active{display:block}
-
-/* History cards */
-.bh-card{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:16px 18px;margin-bottom:10px;display:flex;align-items:center;gap:16px;transition:border-color .15s;cursor:default}
-.bh-card:hover{border-color:rgba(255,255,255,0.13)}
-.bh-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.bh-icon.g{background:var(--green-glow)}
-.bh-icon.a{background:rgba(255,183,3,0.12)}
-.bh-icon.r{background:rgba(255,76,106,0.1)}
-.bh-main{flex:1}
-.bh-title{font-size:13.5px;font-weight:700;margin-bottom:3px}
-.bh-sub{font-size:12px;color:var(--muted)}
-.bh-right{text-align:right}
-.bh-price{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:800;color:var(--green)}
-.bh-date{font-size:11px;color:var(--muted);margin-top:3px}
-
-/* Notif cards */
-.notif-card{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:14px;transition:all .15s}
-.notif-card:hover{border-color:rgba(255,255,255,0.12)}
-.notif-card.unread{border-color:rgba(0,230,118,0.18);background:rgba(0,230,118,0.025)}
-.notif-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.notif-title{font-size:13px;font-weight:700;margin-bottom:3px}
-.notif-body{font-size:12px;color:var(--muted);line-height:1.65}
-.notif-time{font-size:11px;color:var(--muted);white-space:nowrap;margin-left:auto;padding-left:12px}
-.unread-dot{width:8px;height:8px;background:var(--green);border-radius:50%;margin-top:6px;flex-shrink:0}
-
-/* Activity chart */
-.activity-grid{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:8px}
-.act-cell{width:16px;height:16px;border-radius:3px;cursor:default;transition:transform .1s}
-.act-cell:hover{transform:scale(1.2)}
-.act-0{background:var(--navy-light)}
-.act-1{background:rgba(0,230,118,0.2)}
-.act-2{background:rgba(0,230,118,0.45)}
-.act-3{background:var(--green)}
-.act-months{display:flex;gap:18px;font-size:10px;color:var(--muted);margin-bottom:14px}
-
-/* Loyalty card */
-.loyalty-card{background:linear-gradient(135deg,#0f2d1a,#1a4a30);border:1px solid rgba(0,230,118,0.2);border-radius:14px;padding:22px;position:relative;overflow:hidden;margin-top:14px}
-.loyalty-card::before{content:'⭐';position:absolute;right:20px;top:16px;font-size:40px;opacity:.15}
-.loyalty-title{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--green);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
-.loyalty-level{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:900;margin-bottom:4px}
-.loyalty-pts{font-size:12px;color:var(--muted);margin-bottom:14px}
-.loyalty-bar-wrap{height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden}
-.loyalty-bar-fill{height:100%;border-radius:3px;background:var(--green);width:60%}
-.loyalty-next{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:5px}
-
-
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap');
-:root{--navy:#0D1B2A;--navy-mid:#162435;--navy-light:#1E3148;--green:#00E676;--green-dim:#00C864;--green-glow:rgba(0,230,118,0.13);--amber:#FFB703;--slate:#3D5A80;--slate-light:#5B7FA6;--white:#F5F7FA;--muted:#8FA5BE;--danger:#FF4C6A}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;overflow-x:hidden}
-.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--slate),var(--slate-light));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
-.uname{font-size:12.5px;font-weight:600}
-.urole{font-size:11px;color:var(--muted)}
-.topbar{position:sticky;top:64px;height:62px;background:var(--navy-mid);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:90}
-.page-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700}
-.topbar-right{display:flex;align-items:center;gap:12px}
-.notif-btn{width:34px;height:34px;background:var(--navy-light);border:1px solid rgba(255,255,255,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;position:relative;text-decoration:none}
-.notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;background:var(--danger);border-radius:50%;border:1.5px solid var(--navy-mid)}
-.main{min-height:100vh}
-.content{padding:28px}
-.btn{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all .15s}
-.btn-primary{background:var(--green);color:var(--navy)}
-.btn-primary:hover{background:var(--green-dim);box-shadow:0 4px 16px rgba(0,230,118,0.25)}
-.btn-ghost{background:var(--navy-light);color:var(--muted);border:1px solid rgba(255,255,255,0.08)}
-.btn-ghost:hover{color:var(--white)}
-.btn-danger{background:rgba(255,76,106,0.15);color:var(--danger);border:1px solid rgba(255,76,106,0.25)}
-.card{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:12px;overflow:hidden}
-.card-header{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between}
-.card-title{font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:700}
-.card-body{padding:20px}
-.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600}
-.badge-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
-.badge.green{background:var(--green-glow);color:var(--green);border:1px solid rgba(0,230,118,0.25)}
-.badge.amber{background:rgba(255,183,3,0.12);color:var(--amber);border:1px solid rgba(255,183,3,0.25)}
-.badge.red{background:rgba(255,76,106,0.12);color:var(--danger);border:1px solid rgba(255,76,106,0.25)}
-.badge.blue{background:rgba(91,127,166,0.15);color:var(--slate-light);border:1px solid rgba(91,127,166,0.25)}
-.field-group{margin-bottom:14px}
-.field-label{display:block;font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
-.field-input{width:100%;background:var(--navy-light);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px 13px;color:var(--white);font-size:13.5px;font-family:'Inter',sans-serif;outline:none;transition:border-color .15s}
-.field-input:focus{border-color:var(--green)}
-.field-input option{background:var(--navy-mid)}
-
-
-</style>
+<link rel="stylesheet" href="profil.css">
 </head>
 <body>
+    <script src="auth.js"></script>
 
     <!-- ============ NAVBAR (seragam dengan index.html) ============ -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow" id="mainNavbar">
@@ -149,13 +33,13 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
                 <a class="nav-link px-2" href="#"><i class="bi bi-bell-fill text-warning"></i></a>
                 <div class="dropdown">
                     <button class="btn btn-user-menu dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="avatar-circle avatar-sm">J</span>
-                        <span class="d-none d-md-inline ms-2">Junaedi</span>
+                        <span class="avatar-circle avatar-sm" id="navUserInitials">J</span>
+                        <span class="d-none d-md-inline ms-2" id="navUserName">Pengguna</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
                         <li><a class="dropdown-item" href="profil.html"><i class="bi bi-person-fill me-2"></i>Profil &amp; Riwayat</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="index.html"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
+                        <li><a class="dropdown-item" href="#" id="navLogoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
                     </ul>
                 </div>
             </div>
@@ -186,11 +70,12 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
             </ul>
 
             <div class="sidebar-profile mt-auto">
-                <div class="avatar-circle">J</div>
+                <div class="avatar-circle" id="sidebarUserInitials">J</div>
                 <div class="flex-grow-1">
-                    <div class="fw-semibold small text-white">Junaedi</div>
+                    <div class="fw-semibold small text-white" id="sidebarUserName">Pengguna</div>
                     <div class="text-muted-soft small">Pelanggan</div>
                 </div>
+                <button type="button" class="btn btn-sm btn-field" id="sidebarLogoutBtn">Keluar</button>
             </div>
         </div>
     </div>
@@ -214,18 +99,18 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
             <div class="pc-avatar" id="pcAvatar">J</div>
           </div>
           <div class="pc-body">
-            <div class="pc-name" id="pcName">Junaedi</div>
-            <div class="pc-email" id="pcEmail">junabin.junaedi@email.com</div>
+            <div class="pc-name" id="pcName"></div>
+            <div class="pc-email" id="pcEmail"></div>
             <div class="pc-stats">
               <div class="pcs"><div class="pcs-val" id="statTotalBooking">0</div><div class="pcs-lbl">Total Booking</div></div>
               <div class="pcs"><div class="pcs-val" id="statTotalBayar" style="color:var(--amber)">Rp 0</div><div class="pcs-lbl">Total Bayar</div></div>
             </div>
             <div class="divider"></div>
-            <div class="detail-row"><span class="k">No. Telepon</span><span class="v" id="pcPhone">0812-3456-7890</span></div>
-            <div class="detail-row"><span class="k">Bergabung</span><span class="v">Januari 2026</span></div>
+            <div class="detail-row"><span class="k">No. Telepon</span><span class="v" id="pcPhone"></span></div>
+            <div class="detail-row"><span class="k">Bergabung</span><span class="v" id="pcJoinDate"></span></div>
             <div class="detail-row"><span class="k">Peran</span><span class="v"><span class="badge blue">Pelanggan</span></span></div>
-            <div class="detail-row"><span class="k">Lap. Favorit</span><span class="v">Lapangan A</span></div>
-            <div class="detail-row"><span class="k">Booking Aktif</span><span class="v" style="color:var(--amber)">1 booking</span></div>
+            <div class="detail-row"><span class="k">Lap. Favorit</span><span class="v" id="pcFavoriteField">Belum ada</span></div>
+            <div class="detail-row"><span class="k">Booking Aktif</span><span class="v" style="color:var(--amber)" id="pcActiveBookings">0 booking</span></div>
             <div class="divider"></div>
             <button class="btn btn-ghost" style="width:100%;margin-bottom:8px" onclick="toggleEdit()"><i class="bx bx-edit"></i> Edit Profil</button>
             <div class="edit-section" id="edit-section">
@@ -420,18 +305,11 @@ function simpanProfil() {
   document.getElementById('pcPhone').textContent = telepon;
   document.getElementById('pcAvatar').textContent = inisial;
 
-  // Update navbar & sidebar biar konsisten di seluruh halaman
-  const navName = document.getElementById('navUserName');
-  const navAvatar = document.getElementById('navAvatar');
-  const sbName = document.getElementById('sidebarUserName');
-  const sbAvatar = document.getElementById('sidebarAvatar');
-  if (navName) navName.textContent = nama;
-  if (navAvatar) navAvatar.textContent = inisial;
-  if (sbName) sbName.textContent = nama;
-  if (sbAvatar) sbAvatar.textContent = inisial;
+  // Simpan perubahan ke akun yang sedang login (auth.js), bukan lagi ke profilData terpisah
+  updateUserAktif({ nama, username: email, telepon });
 
-  // Simpan ke localStorage supaya tidak hilang saat reload / pindah halaman
-  localStorage.setItem('profilData', JSON.stringify({ nama, email, telepon }));
+  // Update navbar & sidebar biar konsisten di seluruh halaman
+  terapkanNavUser({ nama });
 
   const err = document.getElementById('editErrorMsg');
   if (err) err.style.display = 'none';
@@ -439,34 +317,22 @@ function simpanProfil() {
   toggleEdit();
 }
 
-// --- Muat data profil tersimpan (jika pernah diedit sebelumnya) ---
+// --- Muat data profil dari akun yang sedang login (hasil dari halaman daftar.html) ---
 function muatProfilTersimpan() {
-  const raw = localStorage.getItem('profilData');
-  if (!raw) return;
+  const user = requireAuth(); // akan redirect ke login.html jika belum login
+  if (!user) return;
 
-  try {
-    const data = JSON.parse(raw);
-    const inisial = ambilInisial(data.nama);
+  const inisial = ambilInisial(user.nama);
 
-    document.getElementById('pcName').textContent = data.nama;
-    document.getElementById('pcEmail').textContent = data.email;
-    document.getElementById('pcPhone').textContent = data.telepon;
-    document.getElementById('pcAvatar').textContent = inisial;
-    document.getElementById('editNama').value = data.nama;
-    document.getElementById('editEmail').value = data.email;
-    document.getElementById('editTelepon').value = data.telepon;
+  document.getElementById('pcName').textContent = user.nama;
+  document.getElementById('pcEmail').textContent = user.username;
+  document.getElementById('pcPhone').textContent = user.telepon || '-';
+  document.getElementById('pcAvatar').textContent = inisial;
+  document.getElementById('editNama').value = user.nama;
+  document.getElementById('editEmail').value = user.username;
+  document.getElementById('editTelepon').value = user.telepon || '';
 
-    const navName = document.getElementById('navUserName');
-    const navAvatar = document.getElementById('navAvatar');
-    const sbName = document.getElementById('sidebarUserName');
-    const sbAvatar = document.getElementById('sidebarAvatar');
-    if (navName) navName.textContent = data.nama;
-    if (navAvatar) navAvatar.textContent = inisial;
-    if (sbName) sbName.textContent = data.nama;
-    if (sbAvatar) sbAvatar.textContent = inisial;
-  } catch (e) {
-    // abaikan data rusak
-  }
+  terapkanNavUser(user);
 }
 
 muatProfilTersimpan();

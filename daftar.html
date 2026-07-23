@@ -8,10 +8,11 @@
      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
+    <script src="auth.js"></script>
 
     <div class="login-container">
         <h2>Buat Akun Baru</h2>
-        <form id="formDaftar" action="beranda.html" method="GET">
+        <form id="formDaftar">
             <div class="form-group">
                 <label for="nama">Nama Lengkap</label>
                 <input type="text" id="nama" name="nama" required placeholder="Masukkan nama lengkap Anda">
@@ -21,6 +22,11 @@
                 <label for="username">Username atau Email</label>
                 <input type="text" id="username" name="username" required placeholder="Masukkan username atau email Anda">
                 <i class='bx bxs-user'></i>
+            </div>
+            <div class="form-group">
+                <label for="telepon">No. Telepon</label>
+                <input type="tel" id="telepon" name="telepon" required placeholder="Masukkan nomor telepon Anda">
+                <i class='bx bxs-phone'></i>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
@@ -42,16 +48,31 @@
 
     <script>
         document.getElementById('formDaftar').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const nama = document.getElementById('nama').value.trim();
+            const username = document.getElementById('username').value.trim();
+            const telepon = document.getElementById('telepon').value.trim();
             const password = document.getElementById('password').value;
             const konfirmasi = document.getElementById('konfirmasi').value;
             const pesanError = document.getElementById('pesanError');
 
             if (password !== konfirmasi) {
-                e.preventDefault();
+                pesanError.textContent = 'Password dan konfirmasi tidak sama.';
                 pesanError.style.display = 'block';
-            } else {
-                pesanError.style.display = 'none';
+                return;
             }
+
+            const hasil = daftarkanUser({ nama, username, password, telepon });
+
+            if (!hasil.sukses) {
+                pesanError.textContent = hasil.pesan;
+                pesanError.style.display = 'block';
+                return;
+            }
+
+            pesanError.style.display = 'none';
+            window.location.href = 'login.html';
         });
     </script>
 

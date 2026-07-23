@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    <script src="auth.js"></script>
     <!-- ============ NAVBAR ============ -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow" id="mainNavbar">
         <div class="container">
@@ -27,13 +28,13 @@
                 <a class="nav-link px-2" href="#"><i class="bi bi-bell-fill text-warning"></i></a>
                 <div class="dropdown">
                     <button class="btn btn-user-menu dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="avatar-circle avatar-sm">J</span>
-                        <span class="d-none d-md-inline ms-2">Junaedi</span>
+                        <span class="avatar-circle avatar-sm" id="navUserInitials">J</span>
+                        <span class="d-none d-md-inline ms-2" id="navUserName">Pengguna</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
                         <li><a class="dropdown-item" href="profil.html"><i class="bi bi-person-fill me-2"></i>Profil &amp; Riwayat</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="index.html"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
+                        <li><a class="dropdown-item" href="#" id="navLogoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
                     </ul>
                 </div>
             </div>
@@ -64,11 +65,12 @@
             </ul>
 
             <div class="sidebar-profile mt-auto">
-                <div class="avatar-circle">J</div>
+                <div class="avatar-circle" id="sidebarUserInitials">J</div>
                 <div class="flex-grow-1">
-                    <div class="fw-semibold small text-white">Junaedi</div>
+                    <div class="fw-semibold small text-white" id="sidebarUserName">Pengguna</div>
                     <div class="text-muted-soft small">Pelanggan</div>
                 </div>
+                <button type="button" class="btn btn-sm btn-field" id="sidebarLogoutBtn">Keluar</button>
             </div>
         </div>
     </div>
@@ -218,12 +220,11 @@ function jamSelesai(jamMulai, durasi) {
     return String(selesai).padStart(2, '0') + '.' + String(m).padStart(2, '0');
 }
 
-// --- Muat data booking dari jadwal.html (localStorage) ke Ringkasan Pesanan ---
 let currentBooking = null;
 
 function muatRingkasanPesanan() {
     const raw = localStorage.getItem('bookingData');
-    if (!raw) return; // tidak ada data booking baru, biarkan nilai default di HTML
+    if (!raw) return;
 
     try {
         currentBooking = JSON.parse(raw);
@@ -296,7 +297,7 @@ function handleFileChange(input) {
     const file = input.files[0];
     if (!file) return;
 
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 5 * 1024 * 1024; 
     const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
 
     if (!allowedTypes.includes(file.type)) {
@@ -334,7 +335,6 @@ function submitPembayaran() {
 
     const catatan = document.getElementById('CatatanTambahan').value;
 
-    // --- Simpan booking ini ke riwayat (localStorage) agar muncul di profil.html ---
     const riwayat = JSON.parse(localStorage.getItem('riwayatBooking') || '[]');
 
     const entriBaru = currentBooking ? {
@@ -365,9 +365,9 @@ function submitPembayaran() {
         status: 'Menunggu Verifikasi'
     };
 
-    riwayat.unshift(entriBaru); // booking terbaru ditaruh paling atas
+    riwayat.unshift(entriBaru); 
     localStorage.setItem('riwayatBooking', JSON.stringify(riwayat));
-    localStorage.removeItem('bookingData'); // bersihkan data sementara setelah tersimpan ke riwayat
+    localStorage.removeItem('bookingData'); 
 
     showModal('Bukti pembayaran berhasil dikirim! Admin akan memverifikasi paling lambat 1x24 jam.', 'bi-check-circle-fill', true);
 }

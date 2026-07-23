@@ -8,7 +8,6 @@
         .border-panel { border-color: var(--amn-border) !important; }
         .text-emerald { color: var(--amn-green) !important; }
         
-        /* Form Override */
         .form-control, .form-select {
             background-color: var(--amn-navy);
             border: 1px solid var(--amn-border);
@@ -22,7 +21,6 @@
             box-shadow: none; 
         }
         
-        /* Sidebar Links */
         .sidebar-link {
             text-decoration: none;
             color: var(--amn-muted);
@@ -37,18 +35,14 @@
             background-color: var(--amn-navy-light);
         }
 
-        /* Hide Scrollbar */
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* =========================================
-           TABEL JADWAL (CSS GRID)
-           ========================================= */
+
         .grid-schedule {
             display: grid;
             grid-template-columns: 60px repeat(3, 1fr);
             gap: 12px;
-            /* Minimum width agar tidak terlalu gepeng di HP, akan trigger horizontal scroll */
             min-width: 500px; 
         }
         .slot {
@@ -67,7 +61,6 @@
             letter-spacing: 1px;
         }
 
-        /* Status Lapangan */
         .tersedia { background-color: var(--amn-green-glow); color: var(--amn-green); border: 1px solid rgba(0, 230, 118, 0.35); cursor: pointer; }
         .tersedia:hover { background-color: var(--amn-green); color: var(--amn-navy); transform: scale(0.97); }
         
@@ -76,9 +69,6 @@
         .anda { background-color: var(--amn-amber-glow); color: var(--amn-amber); border: 1px solid rgba(255, 183, 3, 0.4); cursor: pointer; }
         .anda:hover { transform: scale(0.97); }
 
-        /* =========================================
-           KOMPONEN KUSTOM KANAN
-           ========================================= */
         .btn-emerald {
             background-color: var(--amn-green);
             color: var(--amn-navy);
@@ -89,19 +79,13 @@
         
         .tips-box { background-color: var(--amn-navy-mid); }
 
-        
 
-        /* =========================================
-           RESPONSIVE MEDIA QUERIES (Untuk Mobile)
-           ========================================= */
-        /* Layar besar (Desktop/Laptop) */
         @media (min-width: 992px) {
             .sidebar-left { width: 250px; }
             .sidebar-right { width: 350px; }
-            body { overflow: hidden; height: 100vh; } /* Kunci scroll utama di desktop */
+            body { overflow: hidden; height: 100vh; } 
         }
         
-        /* Layar kecil (Tablet/Mobile) */
         @media (max-width: 991.98px) {
             .sidebar-left, .sidebar-right {
                 width: 100%;
@@ -110,32 +94,29 @@
                 border-bottom: 1px solid var(--amn-border);
             }
             body { 
-                overflow-y: auto; /* Izinkan scroll vertikal di HP */
+                overflow-y: auto;
                 height: auto;
                 min-height: 100vh;
             }
             .main-content {
-                overflow: visible !important; /* Biarkan konten mengalir ke bawah */
+                overflow: visible !important; 
             }
         }
 
-        /* Atur lebar laci sidebar saat meluncur keluar di semua ukuran layar */
+
 .sidebar-left.offcanvas {
     width: 280px;
-    background-color: var(--amn-navy-mid) !important; /* Tetap bg-panel */
+    background-color: var(--amn-navy-mid) !important;
     border-right: 1px solid var(--amn-border) !important;
 }
 
-/* Penyesuaian layout desktop karena body-mu menggunakan flex-row */
 @media (min-width: 992px) {
     .sidebar-right { width: 350px; }
-    
-    /* Karena body-nya flex-row, pastikan konten utama melar penuh saat sidebar ditutup */
+
     .main-content {
         flex-grow: 1;
     }
     
-    /* Kembalikan scroll body ke normal/auto karena layout sudah dinamis */
     body { 
         overflow-y: auto; 
         height: auto; 

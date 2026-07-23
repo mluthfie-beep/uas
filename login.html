@@ -8,10 +8,11 @@
      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
+    <script src="auth.js"></script>
 
     <div class="login-container">
         <h2>Selamat Datang</h2>
-        <form action="beranda.html" method="GET">
+        <form id="formLogin">
             <div class="form-group">
                 <label for="username">Username atau Email</label>
                 <input type="text" id="username" name="username" required placeholder="Masukkan Username atau Email Anda">
@@ -22,12 +23,34 @@
                 <input type="password" id="password" name="password" required placeholder="Masukkan password Anda">
                 <i class='bx bxs-lock-alt'></i>
             </div>
+            <p id="pesanError" class="pesan-error" style="display:none;"></p>
             <button type="submit" class="btn-login">Masuk</button>
         </form>
         <div class="footer-text">
            <p>Belum punya akun?</p><a href="daftar.html">Daftar di sini</a>
         </div>
     </div>
+
+    <script>
+        document.getElementById('formLogin').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const pesanError = document.getElementById('pesanError');
+
+            const hasil = loginUser(username, password);
+
+            if (!hasil.sukses) {
+                pesanError.textContent = hasil.pesan;
+                pesanError.style.display = 'block';
+                return;
+            }
+
+            pesanError.style.display = 'none';
+            window.location.href = 'beranda.html';
+        });
+    </script>
 
 </body>
 </html>
