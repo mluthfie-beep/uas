@@ -84,7 +84,7 @@
   <div class="topbar">
     <div class="page-title"><i class="bi bi-person-fill me-2"></i> Profil & Riwayat</div>
     <div class="topbar-right">
-      <a class="notif-btn" href="#"><i class="bi bi-bell-fill text-warning"></i><span class="notif-dot"></span></a>
+      <a class="notif-btn" href="#" onclick="bukaTabNotifikasi(); return false;"><i class="bi bi-bell-fill text-warning"></i><span class="notif-dot" id="topbarNotifDot" style="display:none"></span></a>
       <a href="jadwal.html" class="btn btn-primary">+ Booking Baru</a>
     </div>
   </div>
@@ -137,7 +137,7 @@
       <div>
         <div class="htabs">
           <div class="htab active" onclick="switchTab('riwayat',this)"><i class="bi bi-bookmark-fill"></i> Riwayat Booking</div>
-          <div class="htab" onclick="switchTab('notif',this)"><i class="bi bi-bell-fill text-warning"></i> Notifikasi <span style="background:var(--danger);color:#fff;font-size:9px;font-weight:700;border-radius:10px;padding:1px 5px;margin-left:4px">2</span></div>
+          <div class="htab" onclick="switchTab('notif',this)"><i class="bi bi-bell-fill text-warning"></i> Notifikasi <span id="notifBadge" style="background:var(--danger);color:#fff;font-size:9px;font-weight:700;border-radius:10px;padding:1px 5px;margin-left:4px;display:none">0</span></div>
           <div class="htab" onclick="switchTab('aktivitas',this)"><i class="bi bi-calendar2-week-fill"></i> Aktivitas</div>
         </div>
 
@@ -158,50 +158,13 @@
         <!-- TAB: Notifikasi -->
         <div class="tab-panel" id="tab-notif">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <span style="font-size:13px;font-weight:700">4 Notifikasi</span>
-            <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px">Tandai Semua Dibaca</button>
+            <span style="font-size:13px;font-weight:700" id="notif-count">0 Notifikasi</span>
+            <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px" onclick="tandaiSemuaNotifDibaca()">Tandai Semua Dibaca</button>
           </div>
 
-          <div class="notif-card unread">
-            <div class="notif-icon" style="background:rgba(255,183,3,0.12)"><i class="bx bx-clock"></i></div>
-            <div style="flex:1">
-              <div class="notif-title">Pembayaran Sedang Diverifikasi</div>
-              <div class="notif-body">Bukti transfer <strong>#BK-0413</strong> sudah diterima. Admin sedang memverifikasi. Mohon tunggu 1×24 jam.</div>
-            </div>
-            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-              <span class="notif-time">30 mnt lalu</span>
-              <div class="unread-dot"></div>
-            </div>
-          </div>
-
-          <div class="notif-card unread">
-            <div class="notif-icon" style="background:var(--green-glow)"><i class="bx bx-check text-success"></i></div>
-            <div style="flex:1">
-              <div class="notif-title">Booking Dikonfirmasi</div>
-              <div class="notif-body">Booking <strong>#BK-0398</strong> pada 14 Juni, Lapangan A 09.00–10.00 telah dikonfirmasi. Selamat bermain!</div>
-            </div>
-            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-              <span class="notif-time">2 jam lalu</span>
-              <div class="unread-dot"></div>
-            </div>
-          </div>
-
-          <div class="notif-card">
-            <div class="notif-icon" style="background:rgba(255,76,106,0.1)"><i class="bx bx-x text-danger"></i></div>
-            <div style="flex:1">
-              <div class="notif-title">Booking Dibatalkan</div>
-              <div class="notif-body">Booking <strong>#BK-0365</strong> pada 28 Mei, Lapangan C dibatalkan karena bukti transfer tidak valid. Hubungi admin.</div>
-            </div>
-            <span class="notif-time">28 Mei</span>
-          </div>
-
-          <div class="notif-card">
-            <div class="notif-icon" style="background:var(--green-glow)"><i class="bx bx-party"></i></div>
-            <div style="flex:1">
-              <div class="notif-title">Selamat Datang di Vanguard Sports!</div>
-              <div class="notif-body">Akun Anda berhasil terdaftar. Mulai booking lapangan favorit Anda sekarang dengan mudah dan cepat!</div>
-            </div>
-            <span class="notif-time">Jan 2026</span>
+          <div id="notif-list"></div>
+          <div id="notif-empty" style="display:none;text-align:center;color:var(--muted);font-size:12.5px;padding:30px 0">
+            Belum ada notifikasi.
           </div>
         </div>
 
@@ -453,8 +416,238 @@ function hitungStatistikBooking() {
   totalBayarEl.textContent = formatRupiahSingkat(totalBayar);
 }
 
+// --- Perbarui Bergabung, Lap. Favorit & Booking Aktif berdasarkan riwayat booking ---
+function perbaruiDetailProfilDariBooking() {
+  const riwayat = JSON.parse(localStorage.getItem('riwayatBooking') || '[]');
+
+  const joinEl = document.getElementById('pcJoinDate');
+  const favEl = document.getElementById('pcFavoriteField');
+  const activeEl = document.getElementById('pcActiveBookings');
+
+  if (!riwayat.length) {
+    if (joinEl) joinEl.textContent = '-';
+    if (favEl) favEl.textContent = 'Belum ada';
+    if (activeEl) activeEl.textContent = '0 booking';
+    return;
+  }
+
+  // Bergabung: tanggal booking pertama yang tercatat (booking paling lama = paling awal ditambahkan)
+  if (joinEl) {
+    joinEl.textContent = riwayat[0].tanggal || '-';
+  }
+
+  // Lap. Favorit: lapangan yang paling sering dibooking
+  if (favEl) {
+    const jumlahPerLapangan = {};
+    riwayat.forEach(item => {
+      if (!item.lapangan) return;
+      jumlahPerLapangan[item.lapangan] = (jumlahPerLapangan[item.lapangan] || 0) + 1;
+    });
+    const entries = Object.entries(jumlahPerLapangan);
+    if (entries.length) {
+      entries.sort((a, b) => b[1] - a[1]);
+      favEl.textContent = entries[0][0];
+    } else {
+      favEl.textContent = 'Belum ada';
+    }
+  }
+
+  // Booking Aktif: booking yang belum dibatalkan (Menunggu Verifikasi / Menunggu Bayar / Dikonfirmasi)
+  if (activeEl) {
+    const aktif = riwayat.filter(item => item.status !== 'Dibatalkan').length;
+    activeEl.textContent = aktif + ' booking';
+  }
+}
+
 muatRiwayatBooking();
 hitungStatistikBooking();
+perbaruiDetailProfilDariBooking();
+
+// ==================== NOTIFIKASI ====================
+
+// Peta konten notifikasi berdasarkan status booking
+const notifConfigMap = {
+  'Menunggu Verifikasi': {
+    iconClass: 'bx-clock',
+    iconBg: 'rgba(255,183,3,0.12)',
+    title: 'Pembayaran Sedang Diverifikasi',
+    body: item => `Bukti transfer <strong>#${item.idBooking}</strong> sudah diterima. Admin sedang memverifikasi. Mohon tunggu 1×24 jam.`
+  },
+  'Menunggu Bayar': {
+    iconClass: 'bx-wallet',
+    iconBg: 'rgba(255,183,3,0.12)',
+    title: 'Menunggu Pembayaran',
+    body: item => `Booking <strong>#${item.idBooking}</strong> untuk ${item.lapangan} pada ${item.tanggal} menunggu pembayaran. Segera selesaikan agar jadwal tidak hangus.`
+  },
+  'Dikonfirmasi': {
+    iconClass: 'bx-check text-success',
+    iconBg: 'var(--green-glow)',
+    title: 'Booking Dikonfirmasi',
+    body: item => `Booking <strong>#${item.idBooking}</strong> pada ${item.tanggal}, ${item.lapangan}${item.waktuTampil ? ' ' + item.waktuTampil : ''} telah dikonfirmasi. Selamat bermain!`
+  },
+  'Dibatalkan': {
+    iconClass: 'bx-x text-danger',
+    iconBg: 'rgba(255,76,106,0.1)',
+    title: 'Booking Dibatalkan',
+    body: item => `Booking <strong>#${item.idBooking}</strong> pada ${item.tanggal}, ${item.lapangan} dibatalkan. Hubungi admin bila ada pertanyaan.`
+  }
+};
+
+function ambilStatusDibaca() {
+  return JSON.parse(localStorage.getItem('notifDibaca') || '[]');
+}
+
+function simpanStatusDibaca(daftarId) {
+  localStorage.setItem('notifDibaca', JSON.stringify(daftarId));
+}
+
+// --- Susun daftar notifikasi dari riwayat booking + notifikasi selamat datang ---
+function bangunDaftarNotifikasi() {
+  const riwayat = JSON.parse(localStorage.getItem('riwayatBooking') || '[]');
+  const dibaca = ambilStatusDibaca();
+
+  // Notifikasi dari booking, terbaru duluan (riwayat tersimpan dari lama -> baru)
+  const notifBooking = [...riwayat].reverse().map(item => {
+    const cfg = notifConfigMap[item.status] || notifConfigMap['Menunggu Verifikasi'];
+    const id = 'booking-' + item.idBooking;
+    return {
+      id,
+      iconClass: cfg.iconClass,
+      iconBg: cfg.iconBg,
+      title: cfg.title,
+      body: cfg.body(item),
+      time: item.tanggal || '',
+      read: dibaca.includes(id)
+    };
+  });
+
+  // Notifikasi tetap: selamat datang
+  const notifSelamatDatang = {
+    id: 'welcome',
+    iconClass: 'bx-party',
+    iconBg: 'var(--green-glow)',
+    title: 'Selamat Datang di Vanguard Sports!',
+    body: 'Akun Anda berhasil terdaftar. Mulai booking lapangan favorit Anda sekarang dengan mudah dan cepat!',
+    time: '',
+    read: dibaca.includes('welcome')
+  };
+
+  // Kalau belum ada riwayat booking sama sekali, tampilkan beberapa notifikasi contoh
+  // supaya tab Notifikasi tidak kosong. Begitu ada booking asli, contoh ini otomatis
+  // digantikan oleh notifBooking di atas.
+  const notifContoh = [
+    {
+      id: 'demo-verifikasi',
+      iconClass: 'bx-clock',
+      iconBg: 'rgba(255,183,3,0.12)',
+      title: 'Pembayaran Sedang Diverifikasi',
+      body: 'Bukti transfer <strong>#BK-0413</strong> sudah diterima. Admin sedang memverifikasi. Mohon tunggu 1×24 jam.',
+      time: '30 mnt lalu',
+      read: dibaca.includes('demo-verifikasi')
+    },
+    {
+      id: 'demo-dikonfirmasi',
+      iconClass: 'bx-check text-success',
+      iconBg: 'var(--green-glow)',
+      title: 'Booking Dikonfirmasi',
+      body: 'Booking <strong>#BK-0398</strong> pada 14 Juni, Lapangan A 09.00–10.00 telah dikonfirmasi. Selamat bermain!',
+      time: '2 jam lalu',
+      read: dibaca.includes('demo-dikonfirmasi')
+    },
+    {
+      id: 'demo-dibatalkan',
+      iconClass: 'bx-x text-danger',
+      iconBg: 'rgba(255,76,106,0.1)',
+      title: 'Booking Dibatalkan',
+      body: 'Booking <strong>#BK-0365</strong> pada 28 Mei, Lapangan C dibatalkan karena bukti transfer tidak valid. Hubungi admin.',
+      time: '28 Mei',
+      read: dibaca.includes('demo-dibatalkan')
+    }
+  ];
+
+  const daftarBooking = notifBooking.length ? notifBooking : notifContoh;
+
+  return [...daftarBooking, notifSelamatDatang];
+}
+
+// --- Render notifikasi ke tab Notifikasi ---
+function renderNotifikasi() {
+  const daftar = bangunDaftarNotifikasi();
+  const list = document.getElementById('notif-list');
+  const emptyEl = document.getElementById('notif-empty');
+  const countEl = document.getElementById('notif-count');
+  const badgeEl = document.getElementById('notifBadge');
+  const dotEl = document.getElementById('topbarNotifDot');
+  if (!list) return;
+
+  list.innerHTML = '';
+
+  if (!daftar.length) {
+    if (emptyEl) emptyEl.style.display = 'block';
+  } else {
+    if (emptyEl) emptyEl.style.display = 'none';
+    daftar.forEach(n => {
+      const card = document.createElement('div');
+      card.className = 'notif-card' + (n.read ? '' : ' unread');
+      card.style.cursor = 'pointer';
+      card.onclick = () => tandaiNotifDibaca(n.id);
+      card.innerHTML = `
+        <div class="notif-icon" style="background:${n.iconBg}"><i class="bx ${n.iconClass}"></i></div>
+        <div style="flex:1">
+          <div class="notif-title">${n.title}</div>
+          <div class="notif-body">${n.body}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          ${n.time ? `<span class="notif-time">${n.time}</span>` : ''}
+          ${n.read ? '' : '<div class="unread-dot"></div>'}
+        </div>
+      `;
+      list.appendChild(card);
+    });
+  }
+
+  const totalBelumDibaca = daftar.filter(n => !n.read).length;
+
+  if (countEl) countEl.textContent = daftar.length + ' Notifikasi';
+
+  if (badgeEl) {
+    if (totalBelumDibaca > 0) {
+      badgeEl.textContent = totalBelumDibaca;
+      badgeEl.style.display = 'inline-block';
+    } else {
+      badgeEl.style.display = 'none';
+    }
+  }
+
+  if (dotEl) {
+    dotEl.style.display = totalBelumDibaca > 0 ? 'block' : 'none';
+  }
+}
+
+// --- Tandai satu notifikasi sebagai sudah dibaca ---
+function tandaiNotifDibaca(id) {
+  const dibaca = ambilStatusDibaca();
+  if (!dibaca.includes(id)) {
+    dibaca.push(id);
+    simpanStatusDibaca(dibaca);
+  }
+  renderNotifikasi();
+}
+
+// --- Tandai semua notifikasi sebagai sudah dibaca ---
+function tandaiSemuaNotifDibaca() {
+  const daftar = bangunDaftarNotifikasi();
+  simpanStatusDibaca(daftar.map(n => n.id));
+  renderNotifikasi();
+}
+
+// --- Buka tab Notifikasi dari tombol lonceng di topbar ---
+function bukaTabNotifikasi() {
+  const tabNotif = document.querySelectorAll('.htab')[1];
+  if (tabNotif) switchTab('notif', tabNotif);
+}
+
+renderNotifikasi();
 
 // Generate activity grid
 const actGrid = document.getElementById('act-grid');
